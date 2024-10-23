@@ -1,55 +1,48 @@
-import { NextResponse } from 'next/server';
+import { NextApiResponse, NextApiRequest } from 'next';
 import bcrypt from 'bcryptjs';
 import connectDB from '../../../../lib/mongodb';
 import User from '../../../../models/User';
 
-export async function POST(req) {
-    try {
-        const { username, email, password } = await req.json();
+export default async function handler(req, res) {
+    if (req.method === 'POST') {
+        try {
+            const { username, email, password } = req.body;
 
-        if (!username || !email || !password) {
-            return NextResponse.json(
-                { message: 'Please provide all required fields' },
-                { status: 400 }
-            );
+            if (!username || !email || !password) {
+                return res.status(400).json({ message: 'Please provide all required fields' });
+            }
+
+            await connectDB();
+
+            // Check if user already exists
+            const existingUser = await User.findOne({
+                $or: [{ email }, { username }],
+            });
+
+            if (existingUser) {
+                return res.status(400).json({ message: 'User already exists' });
+            }
+
+            // Hash password
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            // Create user
+            const user = await User.create({
+                username,
+                email,
+                password: hashedPassword,
+            });
+
+            // Remove password from response
+            const { password: _, ...userWithoutPassword } = user.toObject();
+
+            return res.status(201).json({ message: 'User created successfully', user: userWithoutPassword });
+        } catch (error) {
+            console.error('Registration error:', error);
+            return res.status(500).json({ message: 'Error creating user' });
         }
-
-        await connectDB();
-
-        // Check if user already exists
-        const existingUser = await User.findOne({
-            $or: [{ email }, { username }],
-        });
-
-        if (existingUser) {
-            return NextResponse.json(
-                { message: 'User already exists' },
-                { status: 400 }
-            );
-        }
-
-        // Hash password
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Create user
-        const user = await User.create({
-            username,
-            email,
-            password: hashedPassword,
-        });
-
-        // Remove password from response
-        const { password: _, ...userWithoutPassword } = user.toObject();
-
-        return NextResponse.json(
-            { message: 'User created successfully', user: userWithoutPassword },
-            { status: 201 }
-        );
-    } catch (error) {
-        console.error('Registration error:', error);
-        return NextResponse.json(
-            { message: 'Error creating user' },
-            { status: 500 }
-        );
+    } else {
+        res.setHeader('Allow', ['POST']);
+        res.status(405).end(`Method ${req.method} Not Allowed`);
     }
 }
