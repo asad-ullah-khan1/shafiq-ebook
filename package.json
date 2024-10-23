@@ -11,13 +11,17 @@
   "dependencies": {
     "@headlessui/react": "^2.1.10",
     "@heroicons/react": "^2.1.5",
+    "@tailwindcss/typography": "^0.5.15",
+    "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.5.1",
     "mongodb": "^6.10.0",
     "mongoose": "^8.7.2",
     "next": "14.2.16",
     "next-auth": "^4.24.8",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-markdown": "^9.0.1"
   },
   "devDependencies": {
     "postcss": "^8",

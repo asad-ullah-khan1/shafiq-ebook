@@ -32,46 +32,56 @@ const handler = NextAuth({
                     throw new Error('Invalid password');
                 }
 
-                // Log the authorized user data for debugging
-                console.log('Authorized user:', user);
-
+                // Return user data as a plain object
                 return {
-                    id: user._id,
+                    id: user._id.toString(), // Convert ObjectId to string
                     email: user.email,
                     username: user.username,
                     role: user.role,
+                    paymentStatus: user.paymentStatus,
                 };
             }
         })
     ],
     session: {
         strategy: "jwt",
+        maxAge: 30 * 24 * 60 * 60, // 30 days
     },
     pages: {
         signIn: '/login',
         signUp: '/register',
     },
     callbacks: {
-        async jwt({ token, user }) {
-            console.log('JWT callback - token before:', token);
-
+        async jwt({ token, user, trigger, session }) {
             if (user) {
-                token.role = user.role;
+                // When signing in, add user data to token
+                token.id = user.id;
                 token.username = user.username;
+                token.role = user.role;
+                token.paymentStatus = user.paymentStatus;
             }
-            console.log('JWT callback - token after:', token);  // Debug modified token
+
+            // Handle user updates if needed
+            if (trigger === "update" && session) {
+                token.username = session.username;
+                token.role = session.role;
+            }
+
             return token;
         },
         async session({ session, token }) {
-            console.log('Session callback - session before:', session);  // Debug session before modification
             if (token) {
-                session.user.role = token.role;
+                // Add user data to session
+                session.user.id = token.id;
                 session.user.username = token.username;
+                session.user.role = token.role;
+                session.user.paymentStatus = token.paymentStatus;
+
             }
-            console.log('Session callback - session after:', session);  // Debug session after modification
             return session;
         }
-    }
+    },
+    debug: process.env.NODE_ENV === 'development',
 });
 
 export { handler as GET, handler as POST };

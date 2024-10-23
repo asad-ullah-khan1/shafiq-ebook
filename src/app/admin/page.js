@@ -14,7 +14,7 @@ export default function AdminDashboard() {
 
     useEffect(() => {
 
-        console.log('Client-side session data: asad', session);
+        // console.log('Client-side session data: asad', session);
 
         if (status === 'unauthenticated') {
             router.push('/login');

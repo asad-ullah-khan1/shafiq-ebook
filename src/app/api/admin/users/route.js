@@ -8,7 +8,9 @@ export async function GET(req) {
     try {
         const session = await getServerSession();
 
-        console.log('Session data:', session); // Log    
+        console.log('checking here:', session)
+
+        // console.log('Session data:', session); // Log    
         if (!session || session.user.email !== 'asadkhan602@gmail.com') {
             return NextResponse.json(
                 { message: 'Unauthorized' },
@@ -23,10 +25,10 @@ export async function GET(req) {
             .sort({ createdAt: -1 });
 
 
-        console.log('Fetched users:', users);
+        // console.log('Fetched users:', users);
         return NextResponse.json({ users }, { status: 200 });
     } catch (error) {
-        console.error('Admin users fetch error:', error);
+        // console.error('Admin users fetch error:', error);
         return NextResponse.json(
             { message: 'Error fetching users' },
             { status: 500 }
