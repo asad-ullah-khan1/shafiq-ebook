@@ -184,8 +184,8 @@ export default function Layout({ children }) {
                 </div>
             </nav>
 
-            <main className="py-10">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <main>
+                <div className="mx-auto max-w-9xl sm:px-6 lg:px-0">
                     {children}
                 </div>
             </main>
