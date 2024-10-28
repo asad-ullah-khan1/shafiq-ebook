@@ -1,176 +1,217 @@
-// app/page.tsx
 import Link from 'next/link';
-import { BookOpen, Target, Brain, ChevronRight, ArrowRight } from 'lucide-react';
+import { ArrowRight, BookOpen, Brain, Target, CheckCircle2 } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 via-white to-white w-full">
-      {/* Hero Section with modern design */}
-      <div className="relative">
-        {/* Background decoration */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-32 w-96 h-96 rounded-full bg-gradient-to-br from-indigo-200 to-purple-200 blur-3xl opacity-30" />
-          <div className="absolute -top-64 -left-32 w-96 h-96 rounded-full bg-gradient-to-br from-blue-200 to-indigo-200 blur-3xl opacity-30" />
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+      {/* Animated background elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 -right-40 w-96 h-96 rounded-full bg-gradient-to-br from-blue-200/30 to-purple-200/30 blur-3xl animate-pulse" />
+        <div className="absolute top-1/3 -left-40 w-96 h-96 rounded-full bg-gradient-to-br from-indigo-200/30 to-pink-200/30 blur-3xl animate-pulse delay-100" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-gradient-to-br from-purple-200/30 to-pink-200/30 blur-3xl animate-pulse delay-200" />
+      </div>
 
-        <div className="relative px-6 pt-14 lg:px-8">
-          <div className="mx-auto max-w-3xl py-32 sm:py-48 lg:py-56">
-            <div className="text-center">
-              {/* Pill-shaped badge */}
-              <div className="mb-8 inline-flex items-center rounded-full px-6 py-2 text-sm bg-white/70 backdrop-blur-sm border border-indigo-100 text-indigo-600 shadow-sm">
-                <span className="animate-pulse mr-2">🚀</span> Level up your SEO writing skills
+      <div className="relative">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          {/* Header Section */}
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm font-medium mb-6">
+              <BookOpen className="w-4 h-4 mr-2" />
+              SEO Writing Mastery Guide
+            </div>
+            <h1 className="text-5xl md:text-6xl font-extrabold mb-8">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+                SEO Blog Writing eBook
+              </span>
+            </h1>
+          </div>
+
+          {/* Introduction Cards */}
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            {[
+              {
+                icon: <BookOpen className="w-6 h-6" />,
+                title: "27k+ Words",
+                description: "90 pages of practical content"
+              },
+              {
+                icon: <Target className="w-6 h-6" />,
+                title: "5-7 Days",
+                description: "Focused learning period"
+              },
+              {
+                icon: <Brain className="w-6 h-6" />,
+                title: "4 Years Experience",
+                description: "Real client projects knowledge"
+              }
+            ].map((item) => (
+              <div key={item.title} className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                <div className="relative bg-white rounded-2xl p-6 shadow-xl border border-indigo-50">
+                  <div className="text-indigo-600 mb-4">{item.icon}</div>
+                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                  <p className="text-gray-600">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Main Content */}
+          <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-xl border border-indigo-50 mb-16">
+            <div className="prose prose-lg max-w-none">
+              <div className="space-y-4 text-gray-700">
+                <p>Hey, this is the 17th time I am writing this page…</p>
+                <p>You know I am an SEO blog writer & recently, I fell in love with copywriting…</p>
+                <p>So, I tried to use all those phrases that can emotionally grab your attention…touch your pain points, and convince you to read the whole eBook….</p>
+                <p>But I erased them.</p>
+                <p>And you know, I tried to flex how SEO blog writing changed my life, gave me freedom, and blah blah…</p>
+                <p>But I couldn't.</p>
+                <p>Because, honestly, I don't have an SEO blog writing magic wand that can change your life overnight…</p>
               </div>
 
-              <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
-                SAIQO SEO Blog Post Writer
-              </h1>
-              <p className="mt-6 text-xl leading-8 text-gray-600 max-w-2xl mx-auto">
-                Master the art of SEO writing, create high-ranking content, and build a successful freelance career.
-              </p>
-              <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Link
-                  href="/register"
-                  className="group relative rounded-full bg-indigo-600 px-8 py-3.5 text-sm font-semibold text-white shadow-lg hover:bg-indigo-500 transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5"
-                >
-                  Become a Member
-                  <span className="absolute right-4 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
-                    →
-                  </span>
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-sm font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition-colors flex items-center gap-1 group"
-                >
-                  Learn more
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
+              <div className="my-8 p-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border-l-4 border-indigo-500">
+                <p className="text-gray-800">This eBook is 27k+ words (90 pages) long and contains practical and logical information throughout…which means it will put you to work. The proper reading will take 5-7 days, and if you want to do the assignments and take 1-1 masterclasses, then add another week.</p>
+              </div>
+
+              <div className="space-y-4 text-gray-700">
+                <p>I've done my job. Now it's up to you to read it mindfully and heartfully and then apply everything you learn along the way… or take it as just another eBook…and curse me and your decision to buy it.</p>
+                <p>So, I don't want you to buy it emotionally…or be snared with my success story.</p>
+                <p>I'm a self-taught SEO blog writer…I never purchased (or found) any SEO blog writing course. Everything shared in this eBook is what I learned in 4 years of working with clients and delivering projects.</p>
+                <p>It's NOT a course, anyway. And I don't intend to sell it to the masses.</p>
+                <p>It will cost you a small amount because free stuff mostly gets ignored, and I don't want my 7-month-long efforts to go to waste. (Yes, it took me 200+ days.)</p>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Features Section with glass-morphism */}
-      <div className="py-24 relative">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-4">
-              Everything You Need to Excel
+          {/* Content Modules */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+              What You'll Learn
             </h2>
-            <p className="text-lg leading-8 text-gray-600">
-              Comprehensive resources to master SEO writing and grow your career
-            </p>
-          </div>
-          <div className="mx-auto mt-16 max-w-2xl lg:max-w-none">
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+
+            <div className="grid md:grid-cols-2 gap-8">
               {[
                 {
-                  icon: <BookOpen className="h-8 w-8" />,
-                  title: 'Comprehensive Guide',
-                  description: 'From basics to advanced SEO techniques, everything you need to become a professional SEO writer'
+                  title: "Some Basics Before You Get into Writing",
+                  items: [
+                    "Who needs Blog Posts (it explains your ideal prospects)",
+                    "Types of Clients",
+                    "Formats of Blog Posts",
+                    "And a little homework"
+                  ],
+                  gradient: "from-blue-500 to-indigo-500"
                 },
                 {
-                  icon: <Target className="h-8 w-8" />,
-                  title: 'Practical Approach',
-                  description: 'Real-world examples, case studies, and actionable strategies you can implement immediately'
+                  title: "Important Concepts",
+                  items: [
+                    "On-page SEO elements",
+                    "How to Satisfy EEAT (as a generalist writer)",
+                    "Content Readability & Tone",
+                    "Blog Post Formatting",
+                    "AI Detection (& how to get rid of)",
+                    "And MORE"
+                  ],
+                  gradient: "from-indigo-500 to-purple-500"
                 },
                 {
-                  icon: <Brain className="h-8 w-8" />,
-                  title: 'Expert Insights',
-                  description: 'Learn about EEAT, content readability, and advanced SEO concepts from industry experts'
+                  title: "Blog Post Pre-writing Phase",
+                  items: [
+                    "SERP Analysis",
+                    "How to know Search intent & its type",
+                    "Types of Keywords",
+                    "How to research a topic like a pro",
+                    "& Homework"
+                  ],
+                  gradient: "from-purple-500 to-pink-500"
+                },
+                {
+                  title: "Writing Phase",
+                  items: [
+                    "How to create outlines",
+                    "Ranking Blog Audit (analysis)",
+                    "And More",
+                    "Homework"
+                  ],
+                  gradient: "from-pink-500 to-rose-500"
                 }
-              ].map((feature) => (
-                <div
-                  key={feature.title}
-                  className="group relative rounded-3xl bg-white/60 backdrop-blur-lg p-8 shadow-lg ring-1 ring-gray-200/50 hover:bg-white/80 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                >
-                  <div className="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-indigo-600/10 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                    {feature.icon}
+              ].map((module) => (
+                <div key={module.title} className="relative group">
+                  <div className={`absolute inset-0 bg-gradient-to-r ${module.gradient} rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity`}></div>
+                  <div className="relative bg-white/90 backdrop-blur-xl rounded-2xl p-8 shadow-xl border border-indigo-50">
+                    <h3 className="text-xl font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+                      {module.title}
+                    </h3>
+                    <ul className="space-y-3">
+                      {module.items.map((item) => (
+                        <li key={item} className="flex items-start text-gray-700">
+                          <CheckCircle2 className="w-5 h-5 mr-3 text-indigo-500 flex-shrink-0 mt-1" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900">{feature.title}</h3>
-                  <p className="mt-4 text-base leading-7 text-gray-600">{feature.description}</p>
                 </div>
               ))}
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* What You'll Learn Section */}
-      <div className="py-24 bg-gradient-to-b from-white to-indigo-50">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl text-center mb-16">
-            What You'll Learn
-          </h2>
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            {[
-              {
-                title: "SEO Fundamentals",
-                items: ["On-Page SEO Elements", "Meta Tags & ALT Text", "Keyword Placement", "Internal & External Linking"]
-              },
-              {
-                title: "Content Creation",
-                items: ["Blog Post Formats", "Content Readability", "Writing Tone", "BLUF Approach"]
-              },
-              {
-                title: "Advanced Techniques",
-                items: ["Voice Search Optimization", "SERP Analysis", "Content Gap Analysis", "AI Detection Prevention"]
-              },
-              {
-                title: "Professional Growth",
-                items: ["Client Management", "Pricing Strategies", "Quality Assessment", "Client Retention"]
-              }
-            ].map((module) => (
-              <div
-                key={module.title}
-                className="rounded-3xl border border-indigo-100 bg-white/60 backdrop-blur-sm p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-                <h3 className="text-xl font-semibold text-gray-900 mb-6 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                  {module.title}
-                </h3>
-                <ul className="space-y-4">
-                  {module.items.map((item) => (
-                    <li key={item} className="flex items-center text-gray-600 group">
-                      <ChevronRight className="h-5 w-5 text-indigo-600 mr-2 group-hover:translate-x-1 transition-transform" />
-                      <span className="group-hover:text-indigo-600 transition-colors">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* CTA Section with modern gradient */}
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 to-purple-700 opacity-90" />
-        <div className="relative px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Ready to Transform Your Writing Career?
+          {/* Pricing Section */}
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+              Choose Your Learning Path
             </h2>
-            <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-indigo-100">
-              Join our community of successful SEO writers and take your skills to the next level.
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Link
-                href="/register"
-                className="group relative rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-indigo-600 shadow-lg hover:bg-indigo-50 transition-all duration-300 hover:-translate-y-0.5"
-              >
-                Get Started Now
-                <span className="absolute right-4 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
-                  →
-                </span>
-              </Link>
-              <Link
-                href="/about"
-                className="text-sm font-semibold leading-6 text-white hover:text-indigo-200 transition-colors flex items-center gap-1 group"
-              >
-                Learn more
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Do it Yourself */}
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                <div className="relative bg-white/90 backdrop-blur-xl rounded-2xl p-8 shadow-xl border border-indigo-50">
+                  <h3 className="text-2xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+                    Do it Yourself
+                  </h3>
+                  <ul className="space-y-4 mb-8">
+                    <li className="flex items-center text-gray-700">
+                      <CheckCircle2 className="w-5 h-5 mr-3 text-indigo-500" />
+                      Get the eBook
+                    </li>
+                    <li className="flex items-center text-gray-700">
+                      <CheckCircle2 className="w-5 h-5 mr-3 text-indigo-500" />
+                      Do the assignments and writing yourself
+                    </li>
+                  </ul>
+                  <div className="text-3xl font-bold text-indigo-600">2700 PKR</div>
+                </div>
+              </div>
+
+              {/* Do it With Me */}
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                <div className="relative bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl p-8 shadow-xl border border-indigo-50">
+                  <h3 className="text-2xl font-bold mb-6 text-white">
+                    Do it With Me
+                  </h3>
+                  <ul className="space-y-4 mb-8">
+                    <li className="flex items-center text-white">
+                      <CheckCircle2 className="w-5 h-5 mr-3" />
+                      Get the eBook
+                    </li>
+                    <li className="flex items-center text-white">
+                      <CheckCircle2 className="w-5 h-5 mr-3" />
+                      Have me review your assignments
+                    </li>
+                    <li className="flex items-center text-white">
+                      <CheckCircle2 className="w-5 h-5 mr-3" />
+                      Two 1-1 masterclasses
+                    </li>
+                  </ul>
+                  <div className="text-3xl font-bold text-white">4800 PKR</div>
+                </div>
+              </div>
             </div>
+
+            <p className="text-center mt-8 text-lg font-medium text-indigo-600">
+              If you are a newbie, I'd highly suggest the 2nd one.
+            </p>
           </div>
         </div>
       </div>
