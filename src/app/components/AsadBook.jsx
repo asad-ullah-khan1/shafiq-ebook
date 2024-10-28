@@ -25,15 +25,14 @@ const MarkdownComponents = {
             </code>
         );
     },
-    // Custom styling for other Markdown elements
     h1: ({ children }) => (
-        <h1 className="text-4xl font-bold mb-6 text-gray-900">{children}</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">{children}</h1>
     ),
     h2: ({ children }) => (
-        <h2 className="text-3xl font-semibold mt-8 mb-4 text-gray-800">{children}</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold mt-8 mb-4 text-gray-800">{children}</h2>
     ),
     h3: ({ children }) => (
-        <h3 className="text-2xl font-semibold mt-6 mb-3 text-gray-800">{children}</h3>
+        <h3 className="text-xl md:text-2xl font-semibold mt-6 mb-3 text-gray-800">{children}</h3>
     ),
     p: ({ children }) => (
         <p className="mb-4 leading-relaxed text-gray-700">{children}</p>
@@ -61,9 +60,9 @@ const BookReader = () => {
 
     useEffect(() => {
         const fetchBookData = async () => {
-            const response = await fetch('/api/books'); // Fetch data from the API route
+            const response = await fetch('/api/books');
             const data = await response.json();
-            setBookData(data[0]); // Set the first book object
+            setBookData(data[0]);
         };
 
         fetchBookData();
@@ -80,12 +79,11 @@ const BookReader = () => {
     };
 
     if (!bookData) {
-        return <div>Book is Loading...</div>; // Show a loading state while fetching data
+        return <div>Book is Loading...</div>;
     }
 
     return (
         <div className="min-h-screen bg-white">
-            {/* Header */}
             <header className="sticky top-0 z-50 bg-white border-b">
                 <div className="flex items-center justify-between px-4 py-3">
                     <div className="flex items-center gap-3">
@@ -95,20 +93,17 @@ const BookReader = () => {
                         >
                             {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
                         </button>
-                        <h1 className="text-xl font-bold">{bookData.title}</h1>
+                        <h1 className="text-lg md:text-xl font-bold">{bookData.title}</h1>
                     </div>
                 </div>
             </header>
 
             <div className="flex">
-                {/* Sidebar - Table of Contents */}
                 <aside className={`
-          fixed lg:sticky top-[57px] w-[30%] max-w-xs h-[calc(100vh-57px)] 
-          bg-white border-r overflow-y-auto
-          transform transition-transform duration-200 ease-in-out
-          lg:transform-none z-40
-          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        `}>
+                    fixed lg:sticky top-[57px] w-[70%] sm:w-[50%] md:w-[40%] lg:w-[30%] max-w-xs h-[calc(100vh-57px)]
+                    bg-white border-r overflow-y-auto z-40 transform transition-transform duration-200 ease-in-out
+                    ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+                `}>
                     <nav className="p-4">
                         <h2 className="text-lg font-semibold mb-4">Table of Contents</h2>
                         <ul className="space-y-2">
@@ -135,10 +130,8 @@ const BookReader = () => {
                     </nav>
                 </aside>
 
-                {/* Main Content */}
-                <main className="flex-1 min-w-0">
-                    <div className="max-w-3xl mx-auto px-4 py-8">
-                        {/* Chapter Content */}
+                <main className="flex-1 min-w-0 px-4 sm:px-6 py-8">
+                    <div className="max-w-3xl mx-auto">
                         <article className="mb-12">
                             <ReactMarkdown
                                 components={MarkdownComponents}
@@ -148,12 +141,11 @@ const BookReader = () => {
                             </ReactMarkdown>
                         </article>
 
-                        {/* Navigation Buttons */}
-                        <div className="mt-12 flex items-center justify-between border-t pt-6">
+                        <div className="mt-12 flex flex-col sm:flex-row items-center justify-between border-t pt-6">
                             <button
                                 onClick={() => navigateChapter('prev')}
                                 disabled={currentChapter === 0}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-lg
+                                className={`flex items-center gap-2 px-4 py-2 rounded-lg w-full sm:w-auto
                   ${currentChapter === 0
                                         ? 'text-gray-400 cursor-not-allowed'
                                         : 'text-blue-600 hover:bg-blue-50'
@@ -167,7 +159,7 @@ const BookReader = () => {
                             <button
                                 onClick={() => navigateChapter('next')}
                                 disabled={currentChapter === bookData.chapters.length - 1}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-lg
+                                className={`flex items-center gap-2 px-4 py-2 rounded-lg w-full sm:w-auto
                   ${currentChapter === bookData.chapters.length - 1
                                         ? 'text-gray-400 cursor-not-allowed'
                                         : 'text-blue-600 hover:bg-blue-50'
