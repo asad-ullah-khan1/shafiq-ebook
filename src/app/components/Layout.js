@@ -10,7 +10,7 @@ export default function Layout({ children }) {
 
     return (
         <div className="min-h-screen  bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
-            <nav className="bg-white shadow-sm">
+            <nav className="sticky top-0 z-50 bg-white/30 backdrop-blur-md shadow-lg">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
