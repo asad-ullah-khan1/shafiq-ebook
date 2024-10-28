@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    :root {
+        --background: #ffffff;
+        --foreground: #0f172a;
+
+        /* Light mode prose variables */
+        --tw-prose-body: #334155;
+        --tw-prose-headings: #0f172a;
+        --tw-prose-links: #2563eb;
+        --tw-prose-links-hover: #1d4ed8;
+        --tw-prose-underline: #94a3b8;
+        --tw-prose-underline-hover: #64748b;
+        --tw-prose-bold: #0f172a;
+        --tw-prose-counters: #64748b;
+        --tw-prose-bullets: #64748b;
+        --tw-prose-hr: #e2e8f0;
+        --tw-prose-quote-borders: #e2e8f0;
+        --tw-prose-captions: #64748b;
+        --tw-prose-code: #0f172a;
+        --tw-prose-pre-code: #e2e8f0;
+        --tw-prose-pre-bg: #1e293b;
+        --tw-prose-pre-border: #1e293b;
+    }
+
+    .dark {
+        --background: #0f172a;
+        --foreground: #f8fafc;
+
+        /* Dark mode prose variables */
+        --tw-prose-invert-body: #cbd5e1;
+        --tw-prose-invert-headings: #f8fafc;
+        --tw-prose-invert-links: #60a5fa;
+        --tw-prose-invert-links-hover: #93c5fd;
+        --tw-prose-invert-underline: #475569;
+        --tw-prose-invert-underline-hover: #64748b;
+        --tw-prose-invert-bold: #f8fafc;
+        --tw-prose-invert-counters: #94a3b8;
+        --tw-prose-invert-bullets: #94a3b8;
+        --tw-prose-invert-hr: #334155;
+        --tw-prose-invert-quote-borders: #334155;
+        --tw-prose-invert-captions: #94a3b8;
+        --tw-prose-invert-code: #f8fafc;
+        --tw-prose-invert-pre-code: #cbd5e1;
+        --tw-prose-invert-pre-bg: #1e293b;
+        --tw-prose-invert-pre-border: #1e293b;
+    }
+}

@@ -5,6 +5,7 @@ import AuthProvider from './components/AuthProvider';
 import Layout from './components/Layout';
 import './globals.css';
 
+
 // Define the Google Font
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,7 +31,9 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider session={session}>
+
           <Layout>{children}</Layout>
+
         </AuthProvider>
       </body>
     </html>
