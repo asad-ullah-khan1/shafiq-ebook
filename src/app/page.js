@@ -17,13 +17,19 @@ export default function Home() {
           <div className="text-center mb-20">
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm font-medium mb-6">
               <BookOpen className="w-4 h-4 mr-2" />
-              SEO Writing Mastery Guide
+              The Saiqo Writer
             </div>
             <h1 className="text-5xl md:text-6xl font-extrabold mb-8">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
-                SEO Blog Writing eBook
+              <span
+                className="bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: 'linear-gradient(90deg, #8bb456, #8bb456)',
+                }}
+              >
+                SAIQO SEO Blog Post Writing eBook
               </span>
             </h1>
+
           </div>
 
           {/* Introduction Cards */}
@@ -85,8 +91,11 @@ export default function Home() {
 
           {/* Content Modules */}
           <div className="mb-16">
+
+            <h4 className='text-2xl font-bold text-center mb-5'>So if you’re ready to put yourself in some work…</h4>
+
             <h2 className="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
-              What You'll Learn
+              Here is what you’ll exactly have
             </h2>
 
             <div className="grid md:grid-cols-2 gap-8">
@@ -99,7 +108,7 @@ export default function Home() {
                     "Formats of Blog Posts",
                     "And a little homework"
                   ],
-                  gradient: "from-blue-500 to-indigo-500"
+                  gradient: ""
                 },
                 {
                   title: "Important Concepts",
@@ -136,7 +145,7 @@ export default function Home() {
                 }
               ].map((module) => (
                 <div key={module.title} className="relative group">
-                  <div className={`absolute inset-0 bg-gradient-to-r ${module.gradient} rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity`}></div>
+                  <div className={`absolute inset-0 bg-gradient-to-r rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity`}></div>
                   <div className="relative bg-white/90 backdrop-blur-xl rounded-2xl p-8 shadow-xl border border-indigo-50">
                     <h3 className="text-xl font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
                       {module.title}
@@ -164,7 +173,7 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-8">
               {/* Do it Yourself */}
               <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                <div className="absolute inset-0 bg-gradient-to-r rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
                 <div className="relative bg-white/90 backdrop-blur-xl rounded-2xl p-8 shadow-xl border border-indigo-50">
                   <h3 className="text-2xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
                     Do it Yourself
@@ -212,6 +221,11 @@ export default function Home() {
             <p className="text-center mt-8 text-lg font-medium text-indigo-600">
               If you are a newbie, I'd highly suggest the 2nd one.
             </p>
+            <div className='flex items-center justify-center my-5'>
+
+              <Link className="inline-flex items-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full shadow-lg hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 ease-in-out"
+                href='/register' >Register Now!</Link>
+            </div>
           </div>
         </div>
       </div>

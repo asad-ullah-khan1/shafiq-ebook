@@ -23,7 +23,7 @@ const EbookPage = () => {
 
     if (status === "authenticated") {
         return (
-            <div className="min-h-screen bg-gradient-to-r from-gray-100 to-gray-300 p-8">
+            <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 p-8">
                 <div className="max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-8 overflow-y-auto">
                     <h1 className="text-3xl font-bold mb-6 text-center">SAIQO SEO Blog Post Writer</h1>
                     <h2 className="text-2xl font-bold mb-6 text-center">An eBook for newbies & mid-level SEO writers.</h2>
