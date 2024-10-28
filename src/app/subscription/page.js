@@ -4,30 +4,26 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { CheckCircle2 } from 'lucide-react';
 
 const plans = [
     {
         tier: 'tier1',
-        name: 'Basic Plan',
-        price: 9.99,
+        name: 'Do it Yourself',
+        price: 2700,
         features: [
-            'Access to basic ebook collection',
-            'Monthly new releases',
-            'Basic reading features',
-            'Mobile access'
+            'Get the eBook',
+            'Do the assignments and writing yourself',
         ],
     },
     {
         tier: 'tier2',
-        name: 'Premium Plan',
-        price: 19.99,
+        name: 'Do it With Me',
+        price: 4800,
         features: [
-            'Access to entire ebook collection',
-            'Early access to new releases',
-            'Advanced reading features',
-            'Mobile and tablet access',
-            'Offline downloads',
-            'Priority support'
+            'Get the eBook',
+            'Have me review your assignments',
+            'Two 1-1 masterclasses',
         ],
     }
 ];
@@ -40,7 +36,7 @@ export default function Subscription() {
     const [error, setError] = useState('');
 
     if (status === 'loading') {
-        return <div className="text-center py-12">Loading...</div>;
+        return <div className="text-center py-12 text-lg font-medium text-gray-700">Loading...</div>;
     }
 
     if (status === 'unauthenticated') {
@@ -78,18 +74,21 @@ export default function Subscription() {
     };
 
     return (
-        <div className="bg-white py-24 sm:py-32">
+        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-4xl text-center">
                     <h2 className="text-base font-semibold leading-7 text-indigo-600">Pricing</h2>
                     <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
                         Choose your subscription plan
                     </p>
+                    <p className="mt-4 text-lg text-gray-500">
+                        Select a plan that suits your needs and start your journey today.
+                    </p>
                 </div>
 
                 {error && (
                     <div className="mx-auto max-w-4xl mt-8">
-                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+                        <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded relative">
                             {error}
                         </div>
                     </div>
@@ -99,26 +98,30 @@ export default function Subscription() {
                     {plans.map((plan) => (
                         <div
                             key={plan.tier}
-                            className="flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-gray-200 xl:p-10"
+                            className="relative flex flex-col justify-between rounded-xl bg-white shadow-lg hover:shadow-2xl transition-shadow duration-200 p-8 ring-1 ring-gray-200 xl:p-10"
                         >
-                            <div>
-                                <div className="flex items-center justify-between gap-x-4">
-                                    <h3 className="text-lg font-semibold leading-8 text-gray-900">{plan.name}</h3>
-                                </div>
-                                <p className="mt-4 text-sm leading-6 text-gray-600">
-                                    {plan.features.join(' • ')}
-                                </p>
-                                <p className="mt-6 flex items-baseline gap-x-1">
-                                    <span className="text-4xl font-bold tracking-tight text-gray-900">${plan.price}</span>
-                                    <span className="text-sm font-semibold leading-6 text-gray-600">/month</span>
+                            <div className="text-center mb-8">
+                                <h3 className="text-xl font-semibold text-gray-800">{plan.name}</h3>
+                                <p className="mt-4 text-4xl font-bold text-indigo-600">
+                                    {plan.price} PKR
                                 </p>
                             </div>
+
+                            <ul className="space-y-4 mb-8">
+                                {plan.features.map((feature, index) => (
+                                    <li key={index} className="flex items-center text-gray-700">
+                                        <CheckCircle2 className="w-5 h-5 mr-3 text-green-500" />
+                                        {feature}
+                                    </li>
+                                ))}
+                            </ul>
+
                             <button
                                 onClick={() => handleSubscribe(plan.tier)}
                                 disabled={loading || selectedPlan === plan.tier}
-                                className={`mt-6 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${selectedPlan === plan.tier
-                                    ? 'bg-green-600 text-white'
-                                    : 'bg-indigo-600 text-white hover:bg-indigo-500'
+                                className={`w-full rounded-lg px-4 py-3 text-center font-semibold transition duration-200 ${selectedPlan === plan.tier
+                                        ? 'bg-green-500 text-white cursor-not-allowed'
+                                        : 'bg-indigo-600 text-white hover:bg-indigo-500'
                                     }`}
                             >
                                 {selectedPlan === plan.tier
