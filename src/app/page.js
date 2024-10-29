@@ -30,37 +30,11 @@ export default function Home() {
               </span>
             </h1>
 
+            <h2 className='text-2xl md:text-2xl font-extrabold mb-8'>An eBook for newbies & mid-level SEO writers. </h2>
+
           </div>
 
-          {/* Introduction Cards */}
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {[
-              {
-                icon: <BookOpen className="w-6 h-6" />,
-                title: "27k+ Words",
-                description: "90 pages of practical content"
-              },
-              {
-                icon: <Target className="w-6 h-6" />,
-                title: "5-7 Days",
-                description: "Focused learning period"
-              },
-              {
-                icon: <Brain className="w-6 h-6" />,
-                title: "4 Years Experience",
-                description: "Real client projects knowledge"
-              }
-            ].map((item) => (
-              <div key={item.title} className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative bg-white rounded-2xl p-6 shadow-xl border border-indigo-50">
-                  <div className="text-indigo-600 mb-4">{item.icon}</div>
-                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                  <p className="text-gray-600">{item.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+
 
           {/* Main Content */}
           <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-xl border border-indigo-50 mb-16">
