@@ -31,6 +31,7 @@ export default function Home() {
             </h1>
 
             <h2 className='text-2xl md:text-2xl font-extrabold mb-8'>An eBook for newbies & mid-level SEO writers. </h2>
+            <h2 className='text-2xl md:text-2xl font-extrabold mb-8'>Write better blog posts for your clients and earn legit (& more) money. </h2>
 
           </div>
 
