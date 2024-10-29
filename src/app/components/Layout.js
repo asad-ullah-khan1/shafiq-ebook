@@ -12,11 +12,19 @@ export default function Layout({ children }) {
         const handleContextMenu = (e) => {
             e.preventDefault();
         };
-        document.addEventListener('contextmenu', handleContextMenu);
 
-        // Clean up the event listener on component unmount
+        // Disable Ctrl+C (copy)
+        const handleCopy = (e) => {
+            e.preventDefault();
+        };
+
+        document.addEventListener('contextmenu', handleContextMenu);
+        document.addEventListener('copy', handleCopy);
+
+        // Clean up the event listeners on component unmount
         return () => {
             document.removeEventListener('contextmenu', handleContextMenu);
+            document.removeEventListener('copy', handleCopy);
         };
     }, []);
     return (

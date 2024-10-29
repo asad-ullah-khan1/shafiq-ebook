@@ -69,7 +69,9 @@ export default function Home() {
 
             <h4 className='text-2xl font-bold text-center mb-5'>So if you’re ready to put yourself in some work…</h4>
 
-            <h2 className="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+            <h2 className="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent" style={{
+              backgroundImage: 'linear-gradient(90deg, #8bb456, #8bb456)',
+            }}>
               Here is what you’ll exactly have
             </h2>
 
@@ -141,7 +143,9 @@ export default function Home() {
 
           {/* Pricing Section */}
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+            <h2 className="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent" style={{
+              backgroundImage: 'linear-gradient(90deg, #8bb456, #8bb456)',
+            }}>
               Choose Your Learning Path
             </h2>
 
