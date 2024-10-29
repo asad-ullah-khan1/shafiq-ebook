@@ -1,4 +1,4 @@
-// app/layout.js
+
 import { Inter } from 'next/font/google';
 import { getServerSession } from 'next-auth/next';
 import AuthProvider from './components/AuthProvider';
@@ -26,6 +26,9 @@ export default async function RootLayout({ children }) {
     console.error("Failed to retrieve session", error);
     // Optionally set a placeholder or handle errors here
   }
+
+
+
 
   return (
     <html lang="en">

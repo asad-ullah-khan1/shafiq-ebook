@@ -2,12 +2,23 @@
 
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Layout({ children }) {
     const { data: session, status } = useSession();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    useEffect(() => {
+        // Disable right-click
+        const handleContextMenu = (e) => {
+            e.preventDefault();
+        };
+        document.addEventListener('contextmenu', handleContextMenu);
 
+        // Clean up the event listener on component unmount
+        return () => {
+            document.removeEventListener('contextmenu', handleContextMenu);
+        };
+    }, []);
     return (
         <div className="min-h-screen  bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
             <nav className="sticky top-0 z-50 bg-white/30 backdrop-blur-md shadow-lg">
