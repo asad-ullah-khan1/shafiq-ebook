@@ -124,13 +124,13 @@ export default function Home() {
                 <div key={module.title} className="relative group">
                   <div className={`absolute inset-0 bg-gradient-to-r rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity`}></div>
                   <div className="relative bg-white/90 backdrop-blur-xl rounded-2xl p-8 shadow-xl border border-indigo-50">
-                    <h3 className="text-xl font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+                    <h3 className="text-xl font-semibold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-green-600">
                       {module.title}
                     </h3>
                     <ul className="space-y-3">
                       {module.items.map((item) => (
                         <li key={item} className="flex items-start text-gray-700">
-                          <CheckCircle2 className="w-5 h-5 mr-3 text-indigo-500 flex-shrink-0 mt-1" />
+                          <CheckCircle2 className="w-5 h-5 mr-3 text-green-500 flex-shrink-0 mt-1" />
                           <span>{item}</span>
                         </li>
                       ))}
@@ -154,27 +154,27 @@ export default function Home() {
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
                 <div className="relative bg-white/90 backdrop-blur-xl rounded-2xl p-8 shadow-xl border border-indigo-50">
-                  <h3 className="text-2xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+                  <h3 className="text-2xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-indigo-600">
                     Do it Yourself
                   </h3>
                   <ul className="space-y-4 mb-8">
                     <li className="flex items-center text-gray-700">
-                      <CheckCircle2 className="w-5 h-5 mr-3 text-indigo-500" />
+                      <CheckCircle2 className="w-5 h-5 mr-3 text-green-500" />
                       Get the eBook
                     </li>
                     <li className="flex items-center text-gray-700">
-                      <CheckCircle2 className="w-5 h-5 mr-3 text-indigo-500" />
+                      <CheckCircle2 className="w-5 h-5 mr-3 text-green-500" />
                       Do the assignments and writing yourself
                     </li>
                   </ul>
-                  <div className="text-3xl font-bold text-indigo-600">2700 PKR</div>
+                  <div className="text-3xl font-bold text-green-600">2700 PKR</div>
                 </div>
               </div>
 
               {/* Do it With Me */}
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl p-8 shadow-xl border border-indigo-50">
+                <div className="relative bg-gradient-to-br from-green-600 to-green-600 rounded-2xl p-8 shadow-xl border border-indigo-50">
                   <h3 className="text-2xl font-bold mb-6 text-white">
                     Do it With Me
                   </h3>
@@ -197,7 +197,7 @@ export default function Home() {
               </div>
             </div>
 
-            <p className="text-center mt-8 text-lg font-medium text-indigo-600">
+            <p className="text-center mt-8 text-lg font-medium text-green-600">
               If you are a newbie, I'd highly suggest the 2nd one.
             </p>
             <div className='flex items-center justify-center my-5'>
