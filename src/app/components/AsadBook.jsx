@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight, Menu, X } from 'lucide-react';
+import { X, Menu, ChevronLeft, ChevronRight, PanelLeftClose, PanelLeft } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -55,8 +55,10 @@ const MarkdownComponents = {
 
 const BookReader = () => {
     const [bookData, setBookData] = useState(null);
+
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isDesktopSidebarVisible, setIsDesktopSidebarVisible] = useState(true);
     const [currentChapter, setCurrentChapter] = useState(0);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
         const fetchBookData = async () => {
@@ -84,28 +86,57 @@ const BookReader = () => {
 
     return (
         <div className="min-h-screen bg-white">
-            <header className="sticky top-0 bg-white border-b">
+            <header className="sticky top-0 bg-white border-b z-50">
                 <div className="flex items-center justify-between px-4 py-3">
                     <div className="flex items-center gap-3">
+                        {/* Mobile menu button */}
                         <button
                             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                             className="p-2 lg:hidden"
+                            aria-label="Toggle mobile menu"
                         >
                             {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
                         </button>
                         <h1 className="text-lg md:text-xl font-bold">{bookData.title}</h1>
                     </div>
+
+                    {/* Desktop sidebar toggle button */}
+                    <button
+                        onClick={() => setIsDesktopSidebarVisible(!isDesktopSidebarVisible)}
+                        className="hidden lg:flex items-center gap-2 px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded-lg"
+                        aria-label="Toggle table of contents"
+                    >
+                        {isDesktopSidebarVisible ? (
+                            <><PanelLeftClose size={16} /> Hide Contents</>
+                        ) : (
+                            <><PanelLeft size={16} /> Show Contents</>
+                        )}
+                    </button>
                 </div>
             </header>
 
             <div className="flex">
                 <aside className={`
-                    fixed lg:sticky top-[57px] w-[70%] sm:w-[50%] md:w-[40%] lg:w-[30%] max-w-xs h-[calc(100vh-57px)]
-                    bg-white border-r overflow-y-auto z-40 transform transition-transform duration-200 ease-in-out
-                    ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-                `}>
+          fixed lg:sticky top-[57px] w-[70%] sm:w-[50%] md:w-[40%] lg:w-[30%] max-w-xs 
+          h-[calc(100vh-57px)] bg-white border-r overflow-y-auto z-40 
+          transform transition-transform duration-200 ease-in-out
+          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+          ${isDesktopSidebarVisible ? 'lg:translate-x-0' : 'lg:-translate-x-full lg:w-0'}
+        `}>
                     <nav className="p-4">
-                        <h2 className="text-lg font-semibold mb-4">Table of Contents</h2>
+                        {/* Mobile close button */}
+                        <div className="flex justify-between items-center mb-4 lg:hidden">
+                            <h2 className="text-lg font-semibold">Table of Contents</h2>
+                            <button
+                                onClick={() => setIsSidebarOpen(false)}
+                                className="p-1 hover:bg-gray-100 rounded-lg"
+                                aria-label="Close sidebar"
+                            >
+                                <X size={20} />
+                            </button>
+                        </div>
+
+                        {/* Table of Contents */}
                         <ul className="space-y-2">
                             {bookData.chapters.map((chapter, index) => (
                                 <li key={chapter.id}>
@@ -130,7 +161,10 @@ const BookReader = () => {
                     </nav>
                 </aside>
 
-                <main className="flex-1 min-w-0 px-4 sm:px-6 py-8">
+                <main className={`
+          flex-1 min-w-0 px-4 sm:px-6 py-8 transition-all duration-200
+          ${!isDesktopSidebarVisible ? 'lg:max-w-3xl lg:mx-auto' : ''}
+        `}>
                     <div className="max-w-3xl mx-auto">
                         <article className="mb-12">
                             <ReactMarkdown
