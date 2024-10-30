@@ -80,12 +80,13 @@ export default function Subscription() {
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-4xl text-center">
                     <h2 className="text-base font-semibold leading-7 text-indigo-600">Pricing</h2>
-                    <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-                        Choose your subscription plan
-                    </p>
                     <p className="mt-4 text-lg text-gray-500">
-                        Select a plan that suits your needs and start your journey today.
+                        Hey, friend…here's what the eBook will cost you
                     </p>
+                    <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                        Choose the plan that you think will help you most
+                    </p>
+
                 </div>
 
                 {error && (
@@ -143,6 +144,26 @@ export default function Subscription() {
                         </div>
                     ))}
                 </div>
+
+                <div className="mx-auto max-w-4xl text-center my-12">
+
+                    <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                        Payment Information
+                    </p>
+
+                    <h2 className='text-2xl font-bold tracking=tight text-red-500 sm:text-5xl py-2'>Jazcash:</h2>
+                    <p className='text-2xl font-light py-2'>Account Nmb: 03176824639 <br />
+                        Account Name: Muhammad Shafique
+                    </p>
+                    <p className='font-light'>
+
+                        Send the <span className='font-bold'>screenshot</span> on WhatsApp (03176824639).
+                        Also, message me on WA if you have any questions.
+
+                    </p>
+
+                </div>
+
             </div>
         </div>
     );

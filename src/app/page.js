@@ -78,19 +78,21 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-8">
               {[
                 {
-                  title: "Some Basics Before You Get into Writing",
+                  title: "Unit 1: Some Basics Before You Get into Writing",
                   items: [
                     "Who needs Blog Posts (it explains your ideal prospects)",
-                    "Types of Clients",
-                    "Formats of Blog Posts",
-                    "And a little homework"
+                    "What is your responsibility as an SEO writer",
+                    "Types of Clients  (and which to avoid)",
+                    "Formats of Blog Posts with examples",
+                    "& More",
+                    "A little homework"
                   ],
                   gradient: ""
                 },
                 {
-                  title: "Important Concepts",
+                  title: "Unit 2: Important Concepts",
                   items: [
-                    "On-page SEO elements",
+                    "On-page SEO Elements",
                     "How to Satisfy EEAT (as a generalist writer)",
                     "Content Readability & Tone",
                     "Blog Post Formatting",
@@ -100,23 +102,32 @@ export default function Home() {
                   gradient: "from-indigo-500 to-purple-500"
                 },
                 {
-                  title: "Blog Post Pre-writing Phase",
+                  title: "Unit 3: Blog Post Pre-writing Phase",
                   items: [
                     "SERP Analysis",
                     "How to know Search intent & its type",
                     "Types of Keywords",
-                    "How to research a topic like a pro",
+                    "How to Research a Topic like a Pro",
+                    "Primary & Secondary Research",
                     "& Homework"
                   ],
                   gradient: "from-purple-500 to-pink-500"
                 },
                 {
-                  title: "Writing Phase",
+                  title: "Unit 4: Writing Phase",
                   items: [
                     "How to create outlines",
                     "Ranking Blog Audit (analysis)",
+                    "How not to Write a Blog Post",
                     "And More",
-                    "Homework"
+                    "Assignment",
+                  ],
+                  gradient: "from-pink-500 to-rose-500"
+                },
+                {
+                  title: "And the 5th Unit answers your most pressing questions.",
+                  items: [
+
                   ],
                   gradient: "from-pink-500 to-rose-500"
                 }
@@ -193,6 +204,60 @@ export default function Home() {
                     </li>
                   </ul>
                   <div className="text-3xl font-bold text-white">4800 PKR</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="py-12 my-5 px-6 bg-transparent">
+              <div className="max-w-4xl mx-auto text-center space-y-6">
+                <h2 className="text-3xl font-bold text-gray-800">
+                  What are these assignments and Homework about?
+                </h2>
+              </div>
+
+              <div className="mt-10 space-y-10 max-w-3xl mx-auto">
+                <div className="bg-white p-6 shadow-lg rounded-lg">
+                  <h3 className="text-2xl font-semibold text-gray-700">Assignment #1:</h3>
+                  <p className="text-gray-600 mt-2">
+                    In the eBook, I selected a topic to show you how to research and outline a topic. It’s kinda real use case demo. So we have the outlines and research stuff done, but instead of writing the blog post, I audited (in full detail) the ranking blog posts on the same topic. So the writing is left, and your first assignment will be to complete the blog post.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 shadow-lg rounded-lg">
+                  <h3 className="text-2xl font-semibold text-gray-700">Assignment #2:</h3>
+                  <p className="text-gray-600 mt-2">
+                    You can select a topic of your choice and do the research, outline, and writing based on everything you learned in the eBook.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 shadow-lg rounded-lg">
+                  <h3 className="text-2xl font-semibold text-gray-700">Assignments Review (Only Tier 2)</h3>
+                  <p className="text-gray-600 mt-2">
+                    If you choose tier two, I'll review those blog posts, leave suggestions and comments on Gdoc, and give detailed feedback in voice notes on WhatsApp.
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 shadow-lg rounded-lg">
+                  <h3 className="text-2xl font-semibold text-gray-700">Homework:</h3>
+                  <p className="text-gray-600 mt-2">
+                    There are some questions that I asked & and you'll find the answers.
+                    If you choose tier two, I will check them and share my opinion.
+
+                  </p>
+                </div>
+
+                <div className="bg-white p-6 shadow-lg rounded-lg">
+                  <h3 className="text-2xl font-semibold text-gray-700">Masterclasses</h3>
+                  <p className="text-gray-600 mt-2">
+                    Tier two includes two 1-on-1 masterclasses.
+                    In the first masterclass, we'll cover any concepts from the eBook that you found unclear. We’ll also address any additional concerns you have about freelance SEO blog writing.
+                  </p>
+                  <p className="text-gray-600 mt-2">
+                    In the 2ndmasterclass, we will discuss your writing (based on the blog posts you wrote), how you can further upskill and improve, etc.
+
+                    If you have written less than 20 blog posts for clients, I’d highly suggest you tier two. And note that there are limited slots for tier two.
+
+                  </p>
                 </div>
               </div>
             </div>
