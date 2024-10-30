@@ -1,4 +1,3 @@
-// app/subscription/page.js
 'use client';
 
 import { useSession } from 'next-auth/react';
@@ -32,8 +31,9 @@ export default function Subscription() {
     const { data: session, status } = useSession();
     const router = useRouter();
     const [selectedPlan, setSelectedPlan] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loadingTier, setLoadingTier] = useState(null);
     const [error, setError] = useState('');
+    const [notification, setNotification] = useState(''); // New state for notification
 
     if (status === 'loading') {
         return <div className="text-center py-12 text-lg font-medium text-gray-700">Loading...</div>;
@@ -45,8 +45,9 @@ export default function Subscription() {
     }
 
     const handleSubscribe = async (tier) => {
-        setLoading(true);
+        setLoadingTier(tier);
         setError('');
+        setNotification(''); // Clear previous notification
 
         try {
             const res = await fetch('/api/subscribe', {
@@ -64,12 +65,13 @@ export default function Subscription() {
             }
 
             setSelectedPlan(tier);
-            alert('Subscription request submitted! Please wait for admin approval.');
+            setNotification('Subscription request submitted! Please wait for admin approval.');
+            setTimeout(() => setNotification(''), 120000); // 1 minute = 60000 ms
             router.push('/ebook');
         } catch (error) {
             setError(error.message);
         } finally {
-            setLoading(false);
+            setLoadingTier(null);
         }
     };
 
@@ -90,6 +92,14 @@ export default function Subscription() {
                     <div className="mx-auto max-w-4xl mt-8">
                         <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded relative">
                             {error}
+                        </div>
+                    </div>
+                )}
+
+                {notification && (
+                    <div className="mx-auto max-w-4xl mt-8">
+                        <div className="bg-green-50 border border-green-400 text-green-700 px-4 py-3 rounded relative">
+                            {notification}
                         </div>
                     </div>
                 )}
@@ -118,15 +128,15 @@ export default function Subscription() {
 
                             <button
                                 onClick={() => handleSubscribe(plan.tier)}
-                                disabled={loading || selectedPlan === plan.tier}
+                                disabled={loadingTier === plan.tier || selectedPlan === plan.tier}
                                 className={`w-full rounded-lg px-4 py-3 text-center font-semibold transition duration-200 ${selectedPlan === plan.tier
-                                        ? 'bg-green-500 text-white cursor-not-allowed'
-                                        : 'bg-indigo-600 text-white hover:bg-indigo-500'
+                                    ? 'bg-green-500 text-white cursor-not-allowed'
+                                    : 'bg-indigo-600 text-white hover:bg-indigo-500'
                                     }`}
                             >
                                 {selectedPlan === plan.tier
                                     ? 'Subscription Pending'
-                                    : loading
+                                    : loadingTier === plan.tier
                                         ? 'Processing...'
                                         : 'Subscribe'}
                             </button>
