@@ -56,7 +56,7 @@ const MarkdownComponents = {
 const BookReader = () => {
     const [bookData, setBookData] = useState(null);
 
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isDesktopSidebarVisible, setIsDesktopSidebarVisible] = useState(true);
     const [currentChapter, setCurrentChapter] = useState(0);
 
@@ -86,10 +86,9 @@ const BookReader = () => {
 
     return (
         <div className="min-h-screen bg-white">
-            <header className="sticky top-0 bg-white border-b z-50">
+            <header className="sticky top-0 bg-white border-b z-40">
                 <div className="flex items-center justify-between px-4 py-3">
                     <div className="flex items-center gap-3">
-                        {/* Mobile menu button */}
                         <button
                             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                             className="p-2 lg:hidden"
@@ -100,7 +99,6 @@ const BookReader = () => {
                         <h1 className="text-lg md:text-xl font-bold">{bookData.title}</h1>
                     </div>
 
-                    {/* Desktop sidebar toggle button */}
                     <button
                         onClick={() => setIsDesktopSidebarVisible(!isDesktopSidebarVisible)}
                         className="hidden lg:flex items-center gap-2 px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 rounded-lg"
@@ -115,28 +113,36 @@ const BookReader = () => {
                 </div>
             </header>
 
-            <div className="flex">
+            <div className="flex relative">
+                {/* Dark overlay for mobile when sidebar is open */}
+                {isSidebarOpen && (
+                    <div
+                        className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+                        onClick={() => setIsSidebarOpen(false)}
+                    />
+                )}
+
+                {/* Sidebar */}
                 <aside className={`
-          fixed lg:sticky top-[57px] w-[70%] sm:w-[50%] md:w-[40%] lg:w-[30%] max-w-xs 
-          h-[calc(100vh-57px)] bg-white border-r overflow-y-auto z-40 
+          fixed lg:static top-[57px] left-0 w-[270px] max-w-[85vw]
+          h-[calc(100vh-57px)] bg-white border-r overflow-y-auto
           transform transition-transform duration-200 ease-in-out
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-          ${isDesktopSidebarVisible ? 'lg:translate-x-0' : 'lg:-translate-x-full lg:w-0'}
+          ${isDesktopSidebarVisible ? 'lg:translate-x-0 lg:w-[270px]' : 'lg:-translate-x-full lg:w-0'}
+          z-50
         `}>
                     <nav className="p-4">
-                        {/* Mobile close button */}
-                        <div className="flex justify-between items-center mb-4 lg:hidden">
+                        <div className="flex justify-between items-center mb-4">
                             <h2 className="text-lg font-semibold">Table of Contents</h2>
                             <button
                                 onClick={() => setIsSidebarOpen(false)}
-                                className="p-1 hover:bg-gray-100 rounded-lg"
+                                className="p-1 hover:bg-gray-100 rounded-lg lg:hidden"
                                 aria-label="Close sidebar"
                             >
                                 <X size={20} />
                             </button>
                         </div>
 
-                        {/* Table of Contents */}
                         <ul className="space-y-2">
                             {bookData.chapters.map((chapter, index) => (
                                 <li key={chapter.id}>
@@ -161,6 +167,7 @@ const BookReader = () => {
                     </nav>
                 </aside>
 
+                {/* Main content */}
                 <main className={`
           flex-1 min-w-0 px-4 sm:px-6 py-8 transition-all duration-200
           ${!isDesktopSidebarVisible ? 'lg:max-w-3xl lg:mx-auto' : ''}
@@ -179,7 +186,7 @@ const BookReader = () => {
                             <button
                                 onClick={() => navigateChapter('prev')}
                                 disabled={currentChapter === 0}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-lg w-full sm:w-auto
+                                className={`flex items-center gap-2 px-4 py-2 rounded-lg w-full sm:w-auto mb-4 sm:mb-0
                   ${currentChapter === 0
                                         ? 'text-gray-400 cursor-not-allowed'
                                         : 'text-blue-600 hover:bg-blue-50'
