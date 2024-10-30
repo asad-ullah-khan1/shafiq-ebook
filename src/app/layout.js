@@ -11,8 +11,8 @@ const inter = Inter({ subsets: ['latin'] });
 
 // Metadata for the document
 export const metadata = {
-  title: 'eBook Store',
-  description: 'Premium eBooks for your learning journey',
+  title: 'SAIQO SEO Blog Post Writing eBook',
+  description: 'An eBook for newbies & mid-level SEO writers | Write better blog posts for your clients and earn.',
 };
 
 // RootLayout component
