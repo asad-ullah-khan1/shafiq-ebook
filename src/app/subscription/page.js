@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { CheckCircle2 } from 'lucide-react';
+import Image from 'next/image';
 
 const plans = [
     {
@@ -154,6 +155,13 @@ export default function Subscription() {
                     <div className="text-xl sm:text-2xl font-light py-2">
                         <p>Account Number: <span className="font-semibold">03176824639</span></p>
                         <p>Account Name: <span className="font-semibold">Muhammad Shafique</span></p>
+                        <Image
+                            src="https://res.cloudinary.com/dsf2qupc6/image/upload/v1730265797/WhatsApp_Image_2024-10-30_at_10.14.44_AM_gdzdib.jpg"
+                            alt="Payment Information Banner"
+                            width={300}
+                            height={300}
+                            className="mx-auto my-5 rounded-lg"
+                        />
                     </div>
 
                     <p className="text-lg font-light mt-4">
