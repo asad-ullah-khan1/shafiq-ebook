@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth/next';
 import AuthProvider from './components/AuthProvider';
 import Layout from './components/Layout';
 import './globals.css';
+import { Analytics } from '@vercel/analytics/react';
 
 
 // Define the Google Font
@@ -35,7 +36,10 @@ export default async function RootLayout({ children }) {
       <body className={inter.className}>
         <AuthProvider session={session}>
 
-          <Layout>{children}</Layout>
+          <Layout>
+            {children}
+            <Analytics />
+          </Layout>
 
         </AuthProvider>
       </body>

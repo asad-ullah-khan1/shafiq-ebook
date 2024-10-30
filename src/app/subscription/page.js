@@ -146,22 +146,21 @@ export default function Subscription() {
                 </div>
 
                 <div className="mx-auto max-w-4xl text-center my-12">
-
-                    <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                    <p className="text-3xl sm:text-5xl font-bold tracking-tight text-gray-900 mt-4">
                         Payment Information
                     </p>
 
-                    <h2 className='text-2xl font-bold tracking=tight text-red-500 sm:text-5xl py-2'>Jazcash:</h2>
-                    <p className='text-2xl font-light py-2'>Account Nmb: 03176824639 <br />
-                        Account Name: Muhammad Shafique
+                    <h2 className="text-2xl sm:text-4xl font-bold text-red-500 py-4">JazzCash:</h2>
+                    <div className="text-xl sm:text-2xl font-light py-2">
+                        <p>Account Number: <span className="font-semibold">03176824639</span></p>
+                        <p>Account Name: <span className="font-semibold">Muhammad Shafique</span></p>
+                    </div>
+
+                    <p className="text-lg font-light mt-4">
+                        Please send a <span className="font-bold">screenshot</span> of your payment on WhatsApp
+                        at <a href="https://wa.me/923176824639" className="text-blue-600 underline">03176824639</a>.<br />
+                        Feel free to message us on WhatsApp if you have any questions.
                     </p>
-                    <p className='font-light'>
-
-                        Send the <span className='font-bold'>screenshot</span> on WhatsApp (03176824639).
-                        Also, message me on WA if you have any questions.
-
-                    </p>
-
                 </div>
 
             </div>

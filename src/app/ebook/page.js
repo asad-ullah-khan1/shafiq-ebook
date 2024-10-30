@@ -36,9 +36,28 @@ const EbookPage = () => {
                             <Book />
                         </div>
                     ) : (
-                        <div className="text-red-600 text-lg">
-                            <h2 className="font-bold">Payment Pending</h2>
-                            <p>Your payment status is pending. Please contact the admin for approval.</p>
+                        <div className="">
+                            <h2 className="font-bold">Payment Under Review</h2>
+                            <p>Our Team is verifying your payment.Once approve you'll be able to read the book</p>
+                            <p>if you have not sent us your payment screenshots yet.</p>
+
+                            <div className="mx-auto max-w-4xl text-center my-12">
+                                <p className="text-3xl sm:text-5xl font-bold tracking-tight text-gray-900 mt-4">
+                                    Payment Information
+                                </p>
+
+                                <h2 className="text-2xl sm:text-4xl font-bold text-red-500 py-4">JazzCash:</h2>
+                                <div className="text-xl sm:text-2xl font-light py-2">
+                                    <p>Account Number: <span className="font-semibold">03176824639</span></p>
+                                    <p>Account Name: <span className="font-semibold">Muhammad Shafique</span></p>
+                                </div>
+
+                                <p className="text-lg font-light mt-4">
+                                    Please send a <span className="font-bold">screenshot</span> of your payment on WhatsApp
+                                    at <a href="https://wa.me/923176824639" className="text-blue-600 underline">03176824639</a>.<br />
+                                    Feel free to message us on WhatsApp if you have any questions.
+                                </p>
+                            </div>
                         </div>
                     )}
                 </div>
