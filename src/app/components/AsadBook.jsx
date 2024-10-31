@@ -129,7 +129,7 @@ const BookReader = () => {
           transform transition-transform duration-200 ease-in-out
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
           ${isDesktopSidebarVisible ? 'lg:translate-x-0 lg:w-[270px]' : 'lg:-translate-x-full lg:w-0'}
-          z-50
+          z-5z0
         `}>
                     <nav className="p-4">
                         <div className="flex justify-between items-center mb-4">

@@ -26,7 +26,7 @@ export default function Home() {
                   backgroundImage: 'linear-gradient(90deg, #8bb456, #8bb456)',
                 }}
               >
-                SAIQO SEO Blog Post Writing eBook
+                SAIQO SEO Blog Post Writer
               </span>
             </h1>
 
@@ -185,25 +185,25 @@ export default function Home() {
               {/* Do it With Me */}
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative bg-gradient-to-br from-green-600 to-green-600 rounded-2xl p-8 shadow-xl border border-indigo-50">
-                  <h3 className="text-2xl font-bold mb-6 text-white">
+                <div className="relative bg-gradient-to-br from-green-300 to-green-200 rounded-2xl p-8 shadow-xl border border-indigo-50">
+                  <h3 className="text-2xl font-bold mb-6 text-dark">
                     Do it With Me
                   </h3>
                   <ul className="space-y-4 mb-8">
-                    <li className="flex items-center text-white">
+                    <li className="flex items-center text-dark">
                       <CheckCircle2 className="w-5 h-5 mr-3" />
                       Get the eBook
                     </li>
-                    <li className="flex items-center text-white">
+                    <li className="flex items-center text-dark">
                       <CheckCircle2 className="w-5 h-5 mr-3" />
                       Have me review your assignments
                     </li>
-                    <li className="flex items-center text-white">
+                    <li className="flex items-center text-dark">
                       <CheckCircle2 className="w-5 h-5 mr-3" />
                       Two 1-1 masterclasses
                     </li>
                   </ul>
-                  <div className="text-3xl font-bold text-white">4800 PKR</div>
+                  <div className="text-3xl font-bold text-dark">4800 PKR</div>
                 </div>
               </div>
             </div>
@@ -231,7 +231,7 @@ export default function Home() {
                 </div>
 
                 <div className="bg-white p-6 shadow-lg rounded-lg">
-                  <h3 className="text-2xl font-semibold text-gray-700">Assignments Review (Only Tier 2)</h3>
+                  <h3 className="text-2xl font-semibold text-gray-700">Assignments Review</h3>
                   <p className="text-gray-600 mt-2">
                     If you choose tier two, I'll review those blog posts, leave suggestions and comments on Gdoc, and give detailed feedback in voice notes on WhatsApp.
                   </p>
@@ -263,7 +263,7 @@ export default function Home() {
             </div>
 
             <p className="text-center mt-8 text-lg font-medium text-green-600">
-              If you are a newbie, I'd highly suggest the 2nd one.
+              If you have written less than 20 blog posts for clients, I'd highly suggest you tier two. And note that there are limited slots for tier two.
             </p>
             <div className='flex items-center justify-center my-5'>
 
