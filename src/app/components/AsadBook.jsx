@@ -96,7 +96,7 @@ const BookReader = () => {
                         >
                             {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
                         </button>
-                        <h1 className="text-lg md:text-xl font-bold">{bookData.title}</h1>
+                        {/* <h1 className="text-lg md:text-xl font-bold">{bookData.title}</h1> */}
                     </div>
 
                     <button

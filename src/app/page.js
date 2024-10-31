@@ -184,8 +184,8 @@ export default function Home() {
 
               {/* Do it With Me */}
               <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative bg-gradient-to-br from-green-300 to-green-200 rounded-2xl p-8 shadow-xl border border-indigo-50">
+                <div className="absolute inset-0 bg-white/90 rounded-2xl blur-sm opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                <div className="relative bg-white/90 rounded-2xl p-8 shadow-xl border border-indigo-50">
                   <h3 className="text-2xl font-bold mb-6 text-dark">
                     Do it With Me
                   </h3>

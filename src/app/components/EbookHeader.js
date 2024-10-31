@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import Link from 'next/link';
 
 const EbookHeader = () => {
     const [showDedication, setShowDedication] = useState(false);
@@ -10,10 +11,10 @@ const EbookHeader = () => {
             <h1 className="text-3xl font-bold mb-6 text-center">
                 SAIQO SEO Blog Post Writer
             </h1>
-            <h2 className="text-2xl font-bold mb-6 text-center">
+            <h2 className="text-sm font-bold mb-6 text-center">
                 An eBook for newbies & mid-level SEO writers.
             </h2>
-            <p className="text-2xl font-bold mb-6 text-center">
+            <p className="text-sm font-bold mb-6 text-center">
                 Write better blog posts for your clients and earn legit & more money
             </p>
 
@@ -48,7 +49,7 @@ const EbookHeader = () => {
                             </p>
 
                             <p className="text-gray-700 leading-relaxed mb-6">
-                                A cordially thanks to my very talented, dedicated, and amazing fellow Hafsa Raja,
+                                A cordially thanks to my very talented, dedicated, and amazing fellow <Link href="https://www.linkedin.com/in/hafsa-raja/">Hafsa Raja</Link>,
                                 who has greatly supported me in completing this eBook. I owe you bigtime, Hafsa.
                             </p>
 

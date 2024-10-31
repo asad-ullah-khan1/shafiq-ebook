@@ -31,7 +31,7 @@ const EbookPage = () => {
                     <div className="max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-8 overflow-y-auto">
 
 
-                        <p className="text-lg mb-4">Welcome, {session.user?.username}</p>
+                        <p className="text-lg mb-4 text-center">Welcome, {session.user?.username}</p>
 
                         {session.user?.paymentStatus === "approved" ? (
                             <div>
