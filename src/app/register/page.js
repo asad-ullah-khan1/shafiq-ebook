@@ -51,13 +51,13 @@ export default function Register() {
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
-            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+            <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                     Create your account
                 </h2>
             </div>
 
-            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     {error && (
                         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
