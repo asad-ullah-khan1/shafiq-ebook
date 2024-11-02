@@ -4,7 +4,7 @@ import User from '../../../../models/User';
 
 export async function POST(req) {
     try {
-        const { username, email, password } = await req.json();  // Use req.json() instead of req.body
+        const { username, email, password, subscriptionTier = 'none' } = await req.json();  // Use req.json() instead of req.body
 
         if (!username || !email || !password) {
             return new Response(JSON.stringify({ message: 'Please provide all required fields' }), { status: 400 });
@@ -29,6 +29,7 @@ export async function POST(req) {
             username,
             email,
             password: hashedPassword,
+            subscriptionTier,
         });
 
         // Remove password from response

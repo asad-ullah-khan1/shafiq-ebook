@@ -20,7 +20,11 @@ export default function Register() {
             username: formData.get('username'),
             email: formData.get('email'),
             password: formData.get('password'),
+            subscriptionTier: formData.get('subscriptionTier'),
+
         };
+
+        // console.log(data);
 
         try {
             const res = await fetch('/api/register', {
@@ -105,6 +109,109 @@ export default function Register() {
                                 required
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
+                        </div>
+                    </div>
+
+                    {/* Replace your existing subscription tier section with this */}
+                    <div className="space-y-4">
+                        <label className="block text-sm font-medium leading-6 text-gray-900">
+                            Select your plan
+                        </label>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {/* Do it Yourself Tier */}
+                            <div>
+                                <input
+                                    type="radio"
+                                    name="subscriptionTier"
+                                    id="none"
+                                    value="tier1"
+                                    className="hidden peer"
+                                    defaultChecked
+                                />
+                                <label
+                                    htmlFor="none"
+                                    className="block h-full p-6 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-indigo-600 peer-checked:bg-indigo-50 hover:bg-gray-50"
+                                >
+                                    <div className="flex flex-col space-y-4">
+                                        <h3 className="text-lg font-semibold text-gray-900">Do it Yourself</h3>
+                                        <div className="flex items-baseline">
+                                            <span className="text-2xl font-bold text-gray-900">Rs.2700 PKR</span>
+                                            <span className="ml-1 text-gray-500">/month</span>
+                                        </div>
+                                        <p className="text-sm text-gray-500">Get the Book and do the assignments yourself.</p>
+                                        <ul className="space-y-2 mt-4">
+                                            <li className="flex text-sm text-gray-600">
+                                                <svg className="h-5 w-5 text-indigo-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                                                </svg>
+                                                Access to course book
+                                            </li>
+                                            <li className="flex text-sm text-gray-600">
+                                                <svg className="h-5 w-5 text-indigo-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                                                </svg>
+                                                Self-paced learning
+                                            </li>
+                                            <li className="flex text-sm text-gray-600">
+                                                <svg className="h-5 w-5 text-indigo-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                                                </svg>
+                                                Assignment templates
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </label>
+                            </div>
+
+                            {/* Do it with Me Tier */}
+                            <div>
+                                <input
+                                    type="radio"
+                                    name="subscriptionTier"
+                                    id="tier1"
+                                    value="tier2"
+                                    className="hidden peer"
+                                />
+                                <label
+                                    htmlFor="tier1"
+                                    className="block h-full p-6 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-indigo-600 peer-checked:bg-indigo-50 hover:bg-gray-50"
+                                >
+                                    <div className="flex flex-col space-y-4">
+                                        <h3 className="text-lg font-semibold text-gray-900">Do it with Me</h3>
+                                        <div className="flex items-baseline">
+                                            <span className="text-2xl font-bold text-gray-900">Rs.4800 PKR</span>
+                                            <span className="ml-1 text-gray-500">/month</span>
+                                        </div>
+                                        <p className="text-sm text-gray-500">Get personalized guidance and support.</p>
+                                        <ul className="space-y-2 mt-4">
+                                            <li className="flex text-sm text-gray-600">
+                                                <svg className="h-5 w-5 text-indigo-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                                                </svg>
+                                                Everything in DIY plan
+                                            </li>
+                                            <li className="flex text-sm text-gray-600">
+                                                <svg className="h-5 w-5 text-indigo-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                                                </svg>
+                                                Assignment reviews
+                                            </li>
+                                            <li className="flex text-sm text-gray-600">
+                                                <svg className="h-5 w-5 text-indigo-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                                                </svg>
+                                                Two 1-on-1 masterclasses
+                                            </li>
+                                            <li className="flex text-sm text-gray-600">
+                                                <svg className="h-5 w-5 text-indigo-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                                                </svg>
+                                                Direct support access
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
                     </div>
 
