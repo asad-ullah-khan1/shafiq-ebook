@@ -6,6 +6,7 @@ import connectDB from '../../../../../lib/mongodb';
 import User from '../../../../../models/User';
 
 const handler = NextAuth({
+
     providers: [
         CredentialsProvider({
             name: 'Credentials',
@@ -107,3 +108,5 @@ const handler = NextAuth({
 });
 
 export { handler as GET, handler as POST };
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;

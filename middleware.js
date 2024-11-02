@@ -23,17 +23,5 @@ export default withAuth(
 );
 
 export const config = {
-    matcher: ['/api/ebook', '/register'],
+    matcher: ['/api/ebook', '/register', '/ebook'],
 };
-// import { getServerSession } from 'next-auth/react';
-
-// export async function middleware(req) {
-//     const session = await getServerSession({ req });
-//     if (!session) {
-//         return NextResponse.redirect(new URL('/login', req.url));
-//     }
-// }
-
-// export const config = {
-//     matcher: ['/api/ebook', '/register'], // Specify routes to protect
-// };

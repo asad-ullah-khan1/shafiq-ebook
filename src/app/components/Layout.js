@@ -3,8 +3,10 @@
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Layout({ children }) {
+    const router = useRouter();
     const { data: session, status } = useSession({
         required: false,
         onUnauthenticated() {
@@ -15,17 +17,25 @@ export default function Layout({ children }) {
     const [isClient, setIsClient] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
-    // Handle hydration
+    // Handle hydration and initial loading
     useEffect(() => {
         setIsClient(true);
-        setIsLoading(false);
-    }, []);
+        if (status !== 'loading') {
+            setIsLoading(false);
+        }
+    }, [status]);
 
-    // Debug session in development
+    // Session monitoring in development
     useEffect(() => {
-        if (process.env.NODE_ENV === 'development') {
-            console.log('Session:', session);
-            console.log('Status:', status);
+        if (process.env.NODE_ENV === 'development' && status === 'authenticated') {
+            console.log('Session Data:', {
+                status,
+                user: {
+                    email: session?.user?.email,
+                    role: session?.user?.role,
+                    paymentStatus: session?.user?.paymentStatus
+                }
+            });
         }
     }, [session, status]);
 
@@ -52,6 +62,19 @@ export default function Layout({ children }) {
         };
     }, [isClient]);
 
+    // Handle sign out
+    const handleSignOut = async () => {
+        try {
+            await signOut({
+                redirect: true,
+                callbackUrl: '/'
+            });
+        } catch (error) {
+            console.error('Sign out error:', error);
+            router.push('/');
+        }
+    };
+
     // Show loading state
     if (isLoading || status === 'loading') {
         return (
@@ -63,6 +86,12 @@ export default function Layout({ children }) {
 
     const shouldShowNavItems = isClient && status !== 'loading';
     const isAuthenticated = status === 'authenticated' && session?.user;
+
+    // Safe access to user data
+    const userEmail = session?.user?.email;
+    const userRole = session?.user?.role;
+    const userPaymentStatus = session?.user?.paymentStatus;
+
 
     const renderNavLinks = () => {
         if (!shouldShowNavItems) return null;
@@ -177,6 +206,7 @@ export default function Layout({ children }) {
         );
     };
 
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
             <nav className="sticky top-0 z-50 bg-white/30 backdrop-blur-md shadow-lg">
@@ -259,7 +289,6 @@ export default function Layout({ children }) {
 
                 {renderMobileMenu()}
             </nav>
-
             <main>
                 <div className="mx-auto max-w-9xl sm:px-6 lg:px-0">
                     {children}
