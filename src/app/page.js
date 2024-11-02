@@ -255,7 +255,7 @@ export default function Home() {
                   <p className="text-gray-600 mt-2">
                     In the 2ndmasterclass, we will discuss your writing (based on the blog posts you wrote), how you can further upskill and improve, etc.
 
-                    If you have written less than 20 blog posts for clients, I’d highly suggest you tier two. And note that there are limited slots for tier two.
+                    If you have written less than 20 blog posts FOR CLIENTS, I’d highly suggest you tier two. And note that there are limited slots for tier two.
 
                   </p>
                 </div>
