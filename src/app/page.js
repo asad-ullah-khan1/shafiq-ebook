@@ -109,7 +109,7 @@ export default function Home() {
                     "Types of Keywords",
                     "How to Research a Topic like a Pro",
                     "Primary & Secondary Research",
-                    "& Homework"
+                    "& Assignment"
                   ],
                   gradient: "from-purple-500 to-pink-500"
                 },
