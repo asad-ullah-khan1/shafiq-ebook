@@ -53,32 +53,54 @@ const handler = NextAuth({
     },
     callbacks: {
         async jwt({ token, user, trigger, session }) {
-            if (user) {
-                // When signing in, add user data to token
-                token.id = user.id;
-                token.username = user.username;
-                token.role = user.role;
-                token.paymentStatus = user.paymentStatus;
-            }
+            try {
+                if (user) {
+                    // When signing in, add user data to token
+                    token = {
+                        ...token,
+                        id: user.id,
+                        username: user.username,
+                        role: user.role,
+                        paymentStatus: user.paymentStatus,
+                    };
+                }
 
-            // Handle user updates if needed
-            if (trigger === "update" && session) {
-                token.username = session.username;
-                token.role = session.role;
-            }
+                // Handle user updates if needed
+                if (trigger === "update" && session) {
+                    // Using optional chaining and ensuring properties exist
+                    token = {
+                        ...token,
+                        username: session?.username || token.username,
+                        role: session?.role || token.role,
+                        paymentStatus: session?.paymentStatus || token.paymentStatus,
+                    };
+                }
 
-            return token;
+                return token;
+            } catch (error) {
+                console.error('JWT Callback Error:', error);
+                return token; // Return original token if there's an error
+            }
         },
         async session({ session, token }) {
-            if (token) {
-                // Add user data to session
-                session.user.id = token.id;
-                session.user.username = token.username;
-                session.user.role = token.role;
-                session.user.paymentStatus = token.paymentStatus;
-
+            try {
+                if (token) {
+                    // Ensure session.user exists before adding properties
+                    session.user = {
+                        ...session.user,
+                        id: token.id,
+                        username: token.username || null,
+                        role: token.role || null,
+                        paymentStatus: token.paymentStatus || null,
+                        email: session.user?.email // Preserve email from session
+                    };
+                }
+                console.log('Session Callback - Output:', session);
+                return session;
+            } catch (error) {
+                console.error('Session Callback Error:', error);
+                return session; // Return original session if there's an error
             }
-            return session;
         }
     },
     debug: process.env.NODE_ENV === 'development',
