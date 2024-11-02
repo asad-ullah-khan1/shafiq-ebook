@@ -4,6 +4,7 @@ import { useState, Suspense } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { Eye, EyeOff } from 'lucide-react';
 
 // Separate the content that uses useSearchParams
 function LoginContent() {
@@ -12,6 +13,7 @@ function LoginContent() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const justRegistered = searchParams.get('registered');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -81,15 +83,26 @@ function LoginContent() {
                         <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                             Password
                         </label>
-                        <div className="mt-2">
+                        <div className="mt-2 relative">
                             <input
                                 id="password"
                                 name="password"
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 autoComplete="current-password"
                                 required
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pr-10"
                             />
+                            <button
+                                type="button"
+                                className="absolute inset-y-0 right-0 flex items-center pr-3"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? (
+                                    <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-500" />
+                                ) : (
+                                    <Eye className="h-5 w-5 text-gray-400 hover:text-gray-500" />
+                                )}
+                            </button>
                         </div>
                     </div>
 
