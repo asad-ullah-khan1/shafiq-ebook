@@ -164,6 +164,13 @@ export default function Subscription() {
                         />
                     </div>
 
+                    <h2 className="text-2xl sm:text-4xl font-bold text-red-500 py-4">Sadapay / easypaisa:</h2>
+                    <div className="text-xl sm:text-2xl font-light py-2">
+                        <p>Account Title: <span className="font-semibold">Muhammad Shafique </span></p>
+                        <p>Account Number: <span className="font-semibold">03420168294</span></p>
+                    </div>
+
+
                     <p className="text-lg font-light mt-4">
                         Please send a <span className="font-bold">screenshot</span> of your payment on WhatsApp
                         at <a href="https://wa.me/923176824639" className="text-blue-600 underline">03176824639</a>.<br />
