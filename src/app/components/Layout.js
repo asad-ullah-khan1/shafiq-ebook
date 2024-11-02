@@ -8,48 +8,61 @@ export default function Layout({ children }) {
     const { data: session, status } = useSession({
         required: false,
         onUnauthenticated() {
-            // Optional: Handle unauthenticated state
             console.log("User is not authenticated");
         },
     });
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isClient, setIsClient] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
-    // Handle hydration issues
+    // Handle hydration
     useEffect(() => {
         setIsClient(true);
+        setIsLoading(false);
     }, []);
 
+    // Debug session in development
     useEffect(() => {
-        // Disable right-click
-        const handleContextMenu = (e) => {
-            e.preventDefault();
-        };
+        if (process.env.NODE_ENV === 'development') {
+            console.log('Session:', session);
+            console.log('Status:', status);
+        }
+    }, [session, status]);
 
-        // Disable Ctrl+C (copy)
-        const handleCopy = (e) => {
-            e.preventDefault();
+    // Copy protection
+    useEffect(() => {
+        if (!isClient) return;
+
+        const handleContextMenu = (e) => e.preventDefault();
+        const handleCopy = (e) => e.preventDefault();
+        const handleKeyDown = (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
+                e.preventDefault();
+            }
         };
 
         document.addEventListener('contextmenu', handleContextMenu);
         document.addEventListener('copy', handleCopy);
+        document.addEventListener('keydown', handleKeyDown);
 
         return () => {
             document.removeEventListener('contextmenu', handleContextMenu);
             document.removeEventListener('copy', handleCopy);
+            document.removeEventListener('keydown', handleKeyDown);
         };
-    }, []);
+    }, [isClient]);
 
-    // Debug session state
-    useEffect(() => {
-        if (process.env.NODE_ENV === 'development') {
-            console.log('Session Status:', status);
-            console.log('Session Data:', session);
-        }
-    }, [session, status]);
+    // Show loading state
+    if (isLoading || status === 'loading') {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+            </div>
+        );
+    }
 
-    // Don't render navigation items until we're sure about the session state
     const shouldShowNavItems = isClient && status !== 'loading';
+    const isAuthenticated = status === 'authenticated' && session?.user;
 
     const renderNavLinks = () => {
         if (!shouldShowNavItems) return null;
@@ -62,34 +75,35 @@ export default function Layout({ children }) {
                 >
                     Home
                 </Link>
-                {session && (
-                    <Link
-                        href="/subscription"
-                        className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                    >
-                        Subscription
-                    </Link>
-                )}
-                {session?.user?.role === 'admin' && (
-                    <Link
-                        href="/admin"
-                        className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                    >
-                        Admin
-                    </Link>
-                )}
-                {session?.user?.paymentStatus === 'approved' && (
-                    <Link
-                        href="/ebook"
-                        className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                    >
-                        Ebook
-                    </Link>
+                {isAuthenticated && (
+                    <>
+                        <Link
+                            href="/subscription"
+                            className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                        >
+                            Subscription
+                        </Link>
+                        {session.user.role === 'admin' && (
+                            <Link
+                                href="/admin"
+                                className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                            >
+                                Admin
+                            </Link>
+                        )}
+                        {session.user.paymentStatus === 'approved' && (
+                            <Link
+                                href="/ebook"
+                                className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                            >
+                                Ebook
+                            </Link>
+                        )}
+                    </>
                 )}
             </>
         );
     };
-
     const renderMobileMenu = () => {
         if (!shouldShowNavItems) return null;
 
@@ -102,33 +116,35 @@ export default function Layout({ children }) {
                     >
                         Home
                     </Link>
-                    {session && (
-                        <Link
-                            href="/subscription"
-                            className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
-                        >
-                            Subscription
-                        </Link>
-                    )}
-                    {session?.user?.role === 'admin' && (
-                        <Link
-                            href="/admin"
-                            className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
-                        >
-                            Admin
-                        </Link>
-                    )}
-                    {session?.user?.paymentStatus === 'approved' && (
-                        <Link
-                            href="/ebook"
-                            className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
-                        >
-                            Ebook
-                        </Link>
+                    {isAuthenticated && (
+                        <>
+                            <Link
+                                href="/subscription"
+                                className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                            >
+                                Subscription
+                            </Link>
+                            {session.user.role === 'admin' && (
+                                <Link
+                                    href="/admin"
+                                    className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                                >
+                                    Admin
+                                </Link>
+                            )}
+                            {session.user.paymentStatus === 'approved' && (
+                                <Link
+                                    href="/ebook"
+                                    className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                                >
+                                    Ebook
+                                </Link>
+                            )}
+                        </>
                     )}
                 </div>
                 <div className="border-t border-gray-200 pb-3 pt-4">
-                    {status === 'authenticated' ? (
+                    {isAuthenticated ? (
                         <div className="space-y-1">
                             <p className="block px-4 py-2 text-base font-medium text-gray-500">
                                 {session.user.email}
@@ -178,7 +194,7 @@ export default function Layout({ children }) {
                         </div>
                         <div className="hidden sm:ml-6 sm:flex sm:items-center">
                             {shouldShowNavItems && (
-                                status === 'authenticated' ? (
+                                isAuthenticated ? (
                                     <div className="flex items-center space-x-4">
                                         <span className="text-sm text-gray-500">
                                             {session.user.email}
@@ -213,8 +229,11 @@ export default function Layout({ children }) {
                             <button
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                                 className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+                                aria-expanded={isMenuOpen}
                             >
-                                <span className="sr-only">Open main menu</span>
+                                <span className="sr-only">
+                                    {isMenuOpen ? 'Close menu' : 'Open menu'}
+                                </span>
                                 <svg
                                     className={`${isMenuOpen ? 'hidden' : 'block'} h-6 w-6`}
                                     xmlns="http://www.w3.org/2000/svg"
@@ -222,12 +241,7 @@ export default function Layout({ children }) {
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                                 </svg>
                                 <svg
                                     className={`${isMenuOpen ? 'block' : 'hidden'} h-6 w-6`}
@@ -236,12 +250,7 @@ export default function Layout({ children }) {
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
