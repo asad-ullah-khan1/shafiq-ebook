@@ -40,12 +40,23 @@ const MarkdownComponents = {
     ul: ({ children }) => (
         <ul className="mb-4 ml-4 list-disc space-y-2 text-gray-700">{children}</ul>
     ),
-    ol: ({ children }) => (
-        <ol className="mb-4 ml-4 list-decimal space-y-2 text-gray-700">{children}</ol>
-    ),
-    li: ({ children }) => (
-        <li className="ml-4">{children}</li>
-    ),
+    ol: ({ children, ordered, start }) => {
+        // Add CSS counter-reset to ensure proper numbering
+        return (
+            <ol start={start} className="mb-4 ml-4 list-decimal space-y-2 text-gray-700" style={{ counterReset: `list-item ${(start || 1) - 1}` }}>
+                {children}
+            </ol>
+        );
+    },
+    li: ({ children, ordered, index }) => {
+        // For ordered lists, use CSS counters to ensure proper numbering
+        const listStyle = ordered ? { counterIncrement: 'list-item' } : {};
+        return (
+            <li className="ml-4" style={listStyle}>
+                {children}
+            </li>
+        );
+    },
     blockquote: ({ children }) => (
         <blockquote className="border-l-4 border-gray-200 pl-4 my-4 italic text-gray-700">
             {children}
