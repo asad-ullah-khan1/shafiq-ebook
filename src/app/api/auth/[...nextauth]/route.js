@@ -6,7 +6,6 @@ import connectDB from '../../../../../lib/mongodb';
 import User from '../../../../../models/User';
 
 const handler = NextAuth({
-
     providers: [
         CredentialsProvider({
             name: 'Credentials',
@@ -33,9 +32,8 @@ const handler = NextAuth({
                     throw new Error('Invalid password');
                 }
 
-                // Return user data as a plain object
                 return {
-                    id: user._id.toString(), // Convert ObjectId to string
+                    id: user._id.toString(),
                     email: user.email,
                     username: user.username,
                     role: user.role,
@@ -53,55 +51,28 @@ const handler = NextAuth({
         signUp: '/register',
     },
     callbacks: {
-        async jwt({ token, user, trigger, session }) {
-            try {
-                if (user) {
-                    // When signing in, add user data to token
-                    token = {
-                        ...token,
-                        id: user.id,
-                        username: user.username,
-                        role: user.role,
-                        paymentStatus: user.paymentStatus,
-                    };
-                }
-
-                // Handle user updates if needed
-                if (trigger === "update" && session) {
-                    // Using optional chaining and ensuring properties exist
-                    token = {
-                        ...token,
-                        username: session?.username || token.username,
-                        role: session?.role || token.role,
-                        paymentStatus: session?.paymentStatus || token.paymentStatus,
-                    };
-                }
-
-                return token;
-            } catch (error) {
-                console.error('JWT Callback Error:', error);
-                return token; // Return original token if there's an error
+        async jwt({ token, user }) {
+            // If it's a new user signing in, add details to the token
+            if (user) {
+                token.id = user.id;
+                token.username = user.username;
+                token.role = user.role;
+                token.paymentStatus = user.paymentStatus;
             }
+            return token;
         },
         async session({ session, token }) {
-            try {
-                if (token) {
-                    // Ensure session.user exists before adding properties
-                    session.user = {
-                        ...session.user,
-                        id: token.id,
-                        username: token.username || null,
-                        role: token.role || null,
-                        paymentStatus: token.paymentStatus || null,
-                        email: session.user?.email // Preserve email from session
-                    };
-                }
-                console.log('Session Callback - Output:', session);
-                return session;
-            } catch (error) {
-                console.error('Session Callback Error:', error);
-                return session; // Return original session if there's an error
+            // Transfer token information to session
+            if (token) {
+                session.user = {
+                    id: token.id,
+                    username: token.username,
+                    role: token.role,
+                    paymentStatus: token.paymentStatus,
+                    email: session.user?.email || token.email // Preserve email if available
+                };
             }
+            return session;
         }
     },
     debug: process.env.NODE_ENV === 'development',
@@ -109,4 +80,3 @@ const handler = NextAuth({
 
 export { handler as GET, handler as POST };
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
