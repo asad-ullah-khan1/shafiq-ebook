@@ -30,7 +30,7 @@ export default function Layout({ children }) {
     const [isClient, setIsClient] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [localUserData, setLocalUserData] = useState(null);
-    const [userPaid, setuserPaid] = useState(false);
+    const [UserPaid, setUserPaid] = useState(false);
 
 
     const shouldShowNavItems = isClient;
@@ -250,7 +250,7 @@ export default function Layout({ children }) {
                                 Admin
                             </Link>
                         )}
-                        {currentUserData.paymentStatus === 'approved' && (
+                        {UserPaid && (
                             <Link
                                 href="/ebook"
                                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
