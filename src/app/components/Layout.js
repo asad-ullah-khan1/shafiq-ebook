@@ -30,6 +30,7 @@ export default function Layout({ children }) {
     const [isClient, setIsClient] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [localUserData, setLocalUserData] = useState(null);
+    const [userPaid, setuserPaid] = useState(false);
 
 
     const shouldShowNavItems = isClient;
@@ -201,32 +202,31 @@ export default function Layout({ children }) {
                 >
                     Home
                 </Link>
-                {showNavigation && (
-                    <>
-                        <Link
-                            href="/subscription"
-                            className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                        >
-                            Subscription
-                        </Link>
-                        {currentUserData.role === 'admin' && (
-                            <Link
-                                href="/admin"
-                                className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                            >
-                                Admin
-                            </Link>
-                        )}
-                        {currentUserData.paymentStatus === 'approved' && (
-                            <Link
-                                href="/ebook"
-                                className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                            >
-                                Ebook
-                            </Link>
-                        )}
-                    </>
+
+
+                <Link
+                    href="/subscription"
+                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                >
+                    Subscription
+                </Link>
+                {currentUserData.role === 'admin' && (
+                    <Link
+                        href="/admin"
+                        className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                    >
+                        Admin
+                    </Link>
                 )}
+
+                <Link
+                    href="/ebook"
+                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                >
+                    Ebook
+                </Link>
+
+
             </>
         );
     };
