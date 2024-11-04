@@ -1,27 +1,40 @@
 // middleware.js
-import { withAuth } from "next-auth/middleware";
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 
-export default withAuth(
-    function middleware(req) {
-        const token = req.nextauth.token;
-        const path = req.nextUrl.pathname;
+export async function middleware(request) {
+    if (request.nextUrl.pathname.startsWith('/api/books')) {
+        try {
+            const token = await getToken({ req: request });
 
-        if (path.startsWith("/ebook")) {
             if (!token) {
-                return NextResponse.redirect(new URL("/login", req.url));
+                return NextResponse.json(
+                    { error: 'Unauthorized' },
+                    { status: 401 }
+                );
             }
-        }
 
-        return NextResponse.next();
-    },
-    {
-        callbacks: {
-            authorized: ({ token }) => !!token
-        },
+            // Check for approved payment status
+            if (token.user?.paymentStatus !== 'approved') {
+                return NextResponse.json(
+                    { error: 'Payment required' },
+                    { status: 403 }
+                );
+            }
+
+            return NextResponse.next();
+        } catch (error) {
+            console.error('Middleware error:', error);
+            return NextResponse.json(
+                { error: 'Internal server error' },
+                { status: 500 }
+            );
+        }
     }
-);
+
+    return NextResponse.next();
+}
 
 export const config = {
-    matcher: ['/api/ebook', '/register', '/ebook'],
+    matcher: ['/api/books/']
 };
