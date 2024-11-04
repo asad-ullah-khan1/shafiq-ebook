@@ -61,28 +61,28 @@ export default function Layout({ children }) {
         }
     }, [session, status]);
 
-    // Copy protection
-    useEffect(() => {
-        if (!isClient) return;
+    // // Copy protection
+    // useEffect(() => {
+    //     if (!isClient) return;
 
-        const handleContextMenu = (e) => e.preventDefault();
-        const handleCopy = (e) => e.preventDefault();
-        const handleKeyDown = (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
-                e.preventDefault();
-            }
-        };
+    //     const handleContextMenu = (e) => e.preventDefault();
+    //     const handleCopy = (e) => e.preventDefault();
+    //     const handleKeyDown = (e) => {
+    //         if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
+    //             e.preventDefault();
+    //         }
+    //     };
 
-        document.addEventListener('contextmenu', handleContextMenu);
-        document.addEventListener('copy', handleCopy);
-        document.addEventListener('keydown', handleKeyDown);
+    //     document.addEventListener('contextmenu', handleContextMenu);
+    //     document.addEventListener('copy', handleCopy);
+    //     document.addEventListener('keydown', handleKeyDown);
 
-        return () => {
-            document.removeEventListener('contextmenu', handleContextMenu);
-            document.removeEventListener('copy', handleCopy);
-            document.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [isClient]);
+    //     return () => {
+    //         document.removeEventListener('contextmenu', handleContextMenu);
+    //         document.removeEventListener('copy', handleCopy);
+    //         document.removeEventListener('keydown', handleKeyDown);
+    //     };
+    // }, [isClient]);
 
     // Handle sign out
     const handleSignOut = async () => {
