@@ -1,6 +1,6 @@
 'use client';
 import { useSession, signIn } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Book from '../components/AsadBook'
 import EbookHeader from "../components/EbookHeader";
 
@@ -12,14 +12,24 @@ const EbookPage = () => {
         },
     });
 
+    // Add state to track if session is fully loaded
+    const [isSessionLoaded, setIsSessionLoaded] = useState(false);
+    useEffect(() => {
+        if (status === 'authenticated' && session?.user) {
+            setIsSessionLoaded(true);
+        }
+    }, [status, session]);
+
     // For debugging in development
     useEffect(() => {
         if (process.env.NODE_ENV === 'development') {
             console.log('Session:', session);
+            console.log('Status:', status);
+            console.log('IsSessionLoaded:', isSessionLoaded);
         }
-    }, [session]);
+    }, [session, status, isSessionLoaded]);
 
-    if (status === "loading") {
+    if (status === "loading" || !isSessionLoaded) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
                 <div className="text-center">
