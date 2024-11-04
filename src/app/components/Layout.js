@@ -6,6 +6,16 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+
+// Utility function to validate user data
+const isValidUserData = (data) => {
+    return data &&
+        data.id &&
+        data.paymentStatus &&
+        data.role &&
+        data.email;
+};
+
 export default function Layout({ children }) {
     const router = useRouter();
     const { data: session, status } = useSession({
@@ -21,30 +31,62 @@ export default function Layout({ children }) {
 
     // Handle hydration and initial loading
     useEffect(() => {
-        setIsClient(true);
-        // Check localStorage for user data
-        const storedUserData = localStorage.getItem('userData');
-        if (storedUserData) {
-            setLocalUserData(JSON.parse(storedUserData));
-        }
-        if (status !== 'loading') {
-            setIsLoading(false);
-        }
+        const initializeUserState = async () => {
+            try {
+                setIsClient(true);
+                const storedUserData = localStorage.getItem('userData');
+                const parsedData = storedUserData ? JSON.parse(storedUserData) : null;
+
+                if (parsedData && isValidUserData(parsedData)) {
+                    setLocalUserData(parsedData);
+                }
+
+                if (status !== 'loading') {
+                    setIsLoading(false);
+                }
+            } catch (error) {
+                console.error('Error in initialization:', error);
+                setIsLoading(false);
+            }
+        };
+
+        initializeUserState();
     }, [status]);
 
     // Update session effect to maintain localStorage
     useEffect(() => {
-        if (status === 'authenticated' && session?.user) {
-            const userData = {
-                id: session.user.id,
-                username: session.user.username,
-                role: session.user.role,
-                paymentStatus: session.user.paymentStatus,
-                email: session.user.email
-            };
-            localStorage.setItem('userData', JSON.stringify(userData));
-            setLocalUserData(userData);
-        }
+        const updateUserState = async () => {
+            try {
+                // Get stored data
+                const storedUserData = localStorage.getItem('userData');
+                const parsedData = storedUserData ? JSON.parse(storedUserData) : null;
+
+                if (status === 'authenticated' && session?.user) {
+                    // Create complete user data object
+                    const userData = {
+                        id: session.user.id || parsedData?.id,
+                        username: session.user.username || parsedData?.username,
+                        role: session.user.role || parsedData?.role,
+                        paymentStatus: session.user.paymentStatus || parsedData?.paymentStatus,
+                        email: session.user.email,
+                        lastUpdated: new Date().toISOString()
+                    };
+
+                    // Only update localStorage if we have all required fields
+                    if (isValidUserData(userData)) {
+                        localStorage.setItem('userData', JSON.stringify(userData));
+                        setLocalUserData(userData);
+                    }
+                } else if (status === 'unauthenticated') {
+                    localStorage.removeItem('userData');
+                    setLocalUserData(null);
+                }
+            } catch (error) {
+                console.error('Error updating user state:', error);
+            }
+        };
+
+        updateUserState();
     }, [session, status]);
 
     // Session monitoring in development
@@ -84,10 +126,37 @@ export default function Layout({ children }) {
     //     };
     // }, [isClient]);
 
+
+    // Handle page visibility
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                const storedUserData = localStorage.getItem('userData');
+                if (storedUserData) {
+                    try {
+                        const userData = JSON.parse(storedUserData);
+                        if (isValidUserData(userData)) {
+                            setLocalUserData(userData);
+                        }
+                    } catch (error) {
+                        console.error('Error handling visibility change:', error);
+                    }
+                }
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, []);
+
     // Handle sign out
     const handleSignOut = async () => {
         try {
             localStorage.removeItem('userData');
+            localStorage.removeItem('bookData');
+            localStorage.removeItem('bookDataTimestamp');
             setLocalUserData(null);
             await signOut({
                 redirect: true,
@@ -95,7 +164,7 @@ export default function Layout({ children }) {
             });
         } catch (error) {
             console.error('Sign out error:', error);
-            localStorage.removeItem('userData');
+            localStorage.clear(); // Clear all storage on error
             setLocalUserData(null);
             router.push('/');
         }
@@ -111,12 +180,16 @@ export default function Layout({ children }) {
     }
 
     const shouldShowNavItems = isClient && status !== 'loading';
-    const isAuthenticated = (status === 'authenticated' && session?.user) || localUserData;
+    const isAuthenticated = (status === 'authenticated' && session?.user) ||
+        (localUserData && isValidUserData(localUserData));
+    const userData = session?.user || (isValidUserData(localUserData) ? localUserData : null);
 
-    const userData = session?.user || localUserData;
 
     const renderNavLinks = () => {
         if (!shouldShowNavItems) return null;
+
+
+
 
         return (
             <>
