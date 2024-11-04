@@ -31,6 +31,8 @@ export default function Layout({ children }) {
     const [isLoading, setIsLoading] = useState(true);
     const [localUserData, setLocalUserData] = useState(null);
     const [UserPaid, setUserPaid] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+
 
 
     const shouldShowNavItems = isClient;
@@ -111,51 +113,62 @@ export default function Layout({ children }) {
         }
     }, [isClient, isAuthenticated, localUserData, status, session, shouldShowNavItems]);
 
-    // // Copy protection
-    // useEffect(() => {
-    //     if (!isClient) return;
-
-    //     const handleContextMenu = (e) => e.preventDefault();
-    //     const handleCopy = (e) => e.preventDefault();
-    //     const handleKeyDown = (e) => {
-    //         if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
-    //             e.preventDefault();
-    //         }
-    //     };
-
-    //     document.addEventListener('contextmenu', handleContextMenu);
-    //     document.addEventListener('copy', handleCopy);
-    //     document.addEventListener('keydown', handleKeyDown);
-
-    //     return () => {
-    //         document.removeEventListener('contextmenu', handleContextMenu);
-    //         document.removeEventListener('copy', handleCopy);
-    //         document.removeEventListener('keydown', handleKeyDown);
-    //     };
-    // }, [isClient]);
-
-    // Add this new useEffect to check payment status
+    // Copy protection
     useEffect(() => {
-        const checkPaymentStatus = () => {
+        if (!isClient) return;
+
+        const handleContextMenu = (e) => e.preventDefault();
+        const handleCopy = (e) => e.preventDefault();
+        const handleKeyDown = (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
+                e.preventDefault();
+            }
+        };
+
+        document.addEventListener('contextmenu', handleContextMenu);
+        document.addEventListener('copy', handleCopy);
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('contextmenu', handleContextMenu);
+            document.removeEventListener('copy', handleCopy);
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isClient]);
+
+    // Add this effect to check both statuses
+    useEffect(() => {
+        const checkUserStatus = () => {
             // Check localStorage first
             const storedUserData = localStorage.getItem('userData');
             if (storedUserData) {
                 const parsedData = JSON.parse(storedUserData);
+                // Check payment status
                 if (parsedData.paymentStatus === 'approved') {
                     setUserPaid(true);
-                    return;
+                } else {
+                    setUserPaid(false);
                 }
+                // Check admin status
+                if (parsedData.role === 'admin') {
+                    setIsAdmin(true);
+                } else {
+                    setIsAdmin(false);
+                }
+                return;
             }
 
             // If not in localStorage, check session
-            if (session?.user?.paymentStatus === 'approved') {
-                setUserPaid(true);
+            if (session?.user) {
+                setUserPaid(session.user.paymentStatus === 'approved');
+                setIsAdmin(session.user.role === 'admin');
             } else {
                 setUserPaid(false);
+                setIsAdmin(false);
             }
         };
 
-        checkPaymentStatus();
+        checkUserStatus();
     }, [session, localUserData]); // Add dependencies
 
     // Handle page visibility
@@ -236,7 +249,7 @@ export default function Layout({ children }) {
                         >
                             Subscription
                         </Link>
-                        {currentUserData.role === 'admin' && (
+                        {isAdmin && (
                             <Link
                                 href="/admin"
                                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
@@ -282,7 +295,7 @@ export default function Layout({ children }) {
                             >
                                 Subscription
                             </Link>
-                            {currentUserData.role === 'admin' && (
+                            {isAdmin && (
                                 <Link
                                     href="/admin"
                                     className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
@@ -290,7 +303,7 @@ export default function Layout({ children }) {
                                     Admin
                                 </Link>
                             )}
-                            {currentUserData.paymentStatus === 'approved' && (
+                            {UserPaid && (
                                 <Link
                                     href="/ebook"
                                     className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
