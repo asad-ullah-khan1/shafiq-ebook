@@ -17,14 +17,35 @@ export default function Layout({ children }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isClient, setIsClient] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [localUserData, setLocalUserData] = useState(null);
 
     // Handle hydration and initial loading
     useEffect(() => {
         setIsClient(true);
+        // Check localStorage for user data
+        const storedUserData = localStorage.getItem('userData');
+        if (storedUserData) {
+            setLocalUserData(JSON.parse(storedUserData));
+        }
         if (status !== 'loading') {
             setIsLoading(false);
         }
     }, [status]);
+
+    // Update session effect to maintain localStorage
+    useEffect(() => {
+        if (status === 'authenticated' && session?.user) {
+            const userData = {
+                id: session.user.id,
+                username: session.user.username,
+                role: session.user.role,
+                paymentStatus: session.user.paymentStatus,
+                email: session.user.email
+            };
+            localStorage.setItem('userData', JSON.stringify(userData));
+            setLocalUserData(userData);
+        }
+    }, [session, status]);
 
     // Session monitoring in development
     useEffect(() => {
@@ -64,19 +85,18 @@ export default function Layout({ children }) {
     }, [isClient]);
 
     // Handle sign out
-
     const handleSignOut = async () => {
         try {
-            // Clear localStorage before signing out
             localStorage.removeItem('userData');
+            setLocalUserData(null);
             await signOut({
                 redirect: true,
                 callbackUrl: '/'
             });
         } catch (error) {
             console.error('Sign out error:', error);
-            // Still clear localStorage even if signOut fails
             localStorage.removeItem('userData');
+            setLocalUserData(null);
             router.push('/');
         }
     };
@@ -91,13 +111,9 @@ export default function Layout({ children }) {
     }
 
     const shouldShowNavItems = isClient && status !== 'loading';
-    const isAuthenticated = status === 'authenticated' && session?.user;
+    const isAuthenticated = (status === 'authenticated' && session?.user) || localUserData;
 
-    // Safe access to user data
-    const userEmail = session?.user?.email;
-    const userRole = session?.user?.role;
-    const userPaymentStatus = session?.user?.paymentStatus;
-
+    const userData = session?.user || localUserData;
 
     const renderNavLinks = () => {
         if (!shouldShowNavItems) return null;
@@ -110,7 +126,7 @@ export default function Layout({ children }) {
                 >
                     Home
                 </Link>
-                {isAuthenticated && (
+                {(isAuthenticated) && (
                     <>
                         <Link
                             href="/subscription"
@@ -118,7 +134,7 @@ export default function Layout({ children }) {
                         >
                             Subscription
                         </Link>
-                        {session.user.role === 'admin' && (
+                        {userData?.role === 'admin' && (
                             <Link
                                 href="/admin"
                                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
@@ -126,7 +142,7 @@ export default function Layout({ children }) {
                                 Admin
                             </Link>
                         )}
-                        {session.user.paymentStatus === 'approved' && (
+                        {userData?.paymentStatus === 'approved' && (
                             <Link
                                 href="/ebook"
                                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
@@ -139,6 +155,7 @@ export default function Layout({ children }) {
             </>
         );
     };
+
     const renderMobileMenu = () => {
         if (!shouldShowNavItems) return null;
 
@@ -151,7 +168,7 @@ export default function Layout({ children }) {
                     >
                         Home
                     </Link>
-                    {isAuthenticated && (
+                    {(isAuthenticated) && (
                         <>
                             <Link
                                 href="/subscription"
@@ -159,7 +176,7 @@ export default function Layout({ children }) {
                             >
                                 Subscription
                             </Link>
-                            {session.user.role === 'admin' && (
+                            {userData?.role === 'admin' && (
                                 <Link
                                     href="/admin"
                                     className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
@@ -167,7 +184,7 @@ export default function Layout({ children }) {
                                     Admin
                                 </Link>
                             )}
-                            {session.user.paymentStatus === 'approved' && (
+                            {userData?.paymentStatus === 'approved' && (
                                 <Link
                                     href="/ebook"
                                     className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
@@ -182,10 +199,10 @@ export default function Layout({ children }) {
                     {isAuthenticated ? (
                         <div className="space-y-1">
                             <p className="block px-4 py-2 text-base font-medium text-gray-500">
-                                {session.user.email}
+                                {userData?.email}
                             </p>
                             <button
-                                onClick={() => signOut()}
+                                onClick={handleSignOut}
                                 className="block w-full px-4 py-2 text-left text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
                             >
                                 Sign out
@@ -212,7 +229,6 @@ export default function Layout({ children }) {
         );
     };
 
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
             <nav className="sticky top-0 z-50 bg-white/30 backdrop-blur-md shadow-lg">
@@ -233,10 +249,10 @@ export default function Layout({ children }) {
                                 isAuthenticated ? (
                                     <div className="flex items-center space-x-4">
                                         <span className="text-sm text-gray-500">
-                                            {session.user.email}
+                                            {userData?.email}
                                         </span>
                                         <button
-                                            onClick={() => signOut()}
+                                            onClick={handleSignOut}
                                             className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                         >
                                             Sign out
