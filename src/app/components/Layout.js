@@ -134,6 +134,29 @@ export default function Layout({ children }) {
     //     };
     // }, [isClient]);
 
+    // Add this new useEffect to check payment status
+    useEffect(() => {
+        const checkPaymentStatus = () => {
+            // Check localStorage first
+            const storedUserData = localStorage.getItem('userData');
+            if (storedUserData) {
+                const parsedData = JSON.parse(storedUserData);
+                if (parsedData.paymentStatus === 'approved') {
+                    setUserPaid(true);
+                    return;
+                }
+            }
+
+            // If not in localStorage, check session
+            if (session?.user?.paymentStatus === 'approved') {
+                setUserPaid(true);
+            } else {
+                setUserPaid(false);
+            }
+        };
+
+        checkPaymentStatus();
+    }, [session, localUserData]); // Add dependencies
 
     // Handle page visibility
     useEffect(() => {
@@ -187,29 +210,7 @@ export default function Layout({ children }) {
         );
     }
 
-    // Add this new useEffect to check payment status
-    useEffect(() => {
-        const checkPaymentStatus = () => {
-            // Check localStorage first
-            const storedUserData = localStorage.getItem('userData');
-            if (storedUserData) {
-                const parsedData = JSON.parse(storedUserData);
-                if (parsedData.paymentStatus === 'approved') {
-                    setUserPaid(true);
-                    return;
-                }
-            }
 
-            // If not in localStorage, check session
-            if (session?.user?.paymentStatus === 'approved') {
-                setUserPaid(true);
-            } else {
-                setUserPaid(false);
-            }
-        };
-
-        checkPaymentStatus();
-    }, [session, localUserData]); // Add dependencies
 
     const renderNavLinks = () => {
         if (!shouldShowNavItems) return null;
@@ -249,7 +250,7 @@ export default function Layout({ children }) {
                                 Admin
                             </Link>
                         )}
-                        {userPaid && (
+                        {currentUserData.paymentStatus === 'approved' && (
                             <Link
                                 href="/ebook"
                                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
