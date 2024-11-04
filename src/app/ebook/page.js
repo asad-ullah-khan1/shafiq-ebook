@@ -5,6 +5,9 @@ import Book from '../components/AsadBook'
 import EbookHeader from "../components/EbookHeader";
 
 const EbookPage = () => {
+    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
     const { data: session, status } = useSession({
         required: true,
         onUnauthenticated() {
@@ -12,24 +15,61 @@ const EbookPage = () => {
         },
     });
 
-    // Add state to track if session is fully loaded
-    const [isSessionLoaded, setIsSessionLoaded] = useState(false);
     useEffect(() => {
-        if (status === 'authenticated' && session?.user) {
-            setIsSessionLoaded(true);
-        }
-    }, [status, session]);
+        const initializeAuth = async () => {
+            try {
+                // First check localStorage
+                const storedData = localStorage.getItem('userData');
+                if (storedData) {
+                    const userData = JSON.parse(storedData);
+                    if (userData.paymentStatus === 'approved') {
+                        setIsAuthorized(true);
+                        setIsLoading(false);
+                        return;
+                    }
+                }
 
-    // For debugging in development
+                // If no valid stored data, check session
+                if (status === 'authenticated' && session?.user) {
+                    const userData = {
+                        id: session.user.id,
+                        username: session.user.username,
+                        role: session.user.role,
+                        paymentStatus: session.user.paymentStatus,
+                        email: session.user.email,
+                        lastUpdated: new Date().toISOString()
+                    };
+
+                    localStorage.setItem('userData', JSON.stringify(userData));
+                    setIsAuthorized(session.user.paymentStatus === 'approved');
+                }
+
+                setIsLoading(false);
+            } catch (error) {
+                console.error('Auth initialization error:', error);
+                setIsLoading(false);
+            }
+        };
+
+        if (status !== 'loading') {
+            initializeAuth();
+        }
+    }, [session, status]);
+
+    // Debug logging
     useEffect(() => {
         if (process.env.NODE_ENV === 'development') {
-            console.log('Session:', session);
-            console.log('Status:', status);
-            console.log('IsSessionLoaded:', isSessionLoaded);
+            console.log('Auth State:', {
+                status,
+                isAuthorized,
+                isLoading,
+                sessionUser: session?.user,
+                storedUser: localStorage.getItem('userData')
+            });
         }
-    }, [session, status, isSessionLoaded]);
+    }, [status, isAuthorized, isLoading, session]);
 
-    if (status === "loading" || !isSessionLoaded) {
+    if (status === "loading" || isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
                 <div className="text-center">
@@ -41,7 +81,7 @@ const EbookPage = () => {
     }
 
     if (!session?.user) {
-        return null; // Will redirect due to required: true
+        return null;
     }
 
     return (
@@ -53,7 +93,7 @@ const EbookPage = () => {
                         Welcome, {session.user.username || session.user.email}
                     </p>
 
-                    {session.user.paymentStatus === "approved" ? (
+                    {isAuthorized ? (
                         <div>
                             <Book />
                         </div>

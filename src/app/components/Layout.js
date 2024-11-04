@@ -64,14 +64,19 @@ export default function Layout({ children }) {
     }, [isClient]);
 
     // Handle sign out
+
     const handleSignOut = async () => {
         try {
+            // Clear localStorage before signing out
+            localStorage.removeItem('userData');
             await signOut({
                 redirect: true,
                 callbackUrl: '/'
             });
         } catch (error) {
             console.error('Sign out error:', error);
+            // Still clear localStorage even if signOut fails
+            localStorage.removeItem('userData');
             router.push('/');
         }
     };
