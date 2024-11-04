@@ -16,6 +16,8 @@ const isValidUserData = (data) => {
         data.email;
 };
 
+
+
 export default function Layout({ children }) {
     const router = useRouter();
     const { data: session, status } = useSession({
@@ -29,23 +31,28 @@ export default function Layout({ children }) {
     const [isLoading, setIsLoading] = useState(true);
     const [localUserData, setLocalUserData] = useState(null);
 
+
+    const shouldShowNavItems = isClient;
+    const isAuthenticated = status === 'authenticated' ||
+        (localUserData && isValidUserData(localUserData));
+    const userData = session?.user || (isValidUserData(localUserData) ? localUserData : null);
     // Handle hydration and initial loading
     useEffect(() => {
-        const initializeUserState = async () => {
+        const initializeUserState = () => {
+            setIsClient(true);
             try {
-                setIsClient(true);
                 const storedUserData = localStorage.getItem('userData');
-                const parsedData = storedUserData ? JSON.parse(storedUserData) : null;
-
-                if (parsedData && isValidUserData(parsedData)) {
-                    setLocalUserData(parsedData);
-                }
-
-                if (status !== 'loading') {
-                    setIsLoading(false);
+                if (storedUserData) {
+                    const parsedData = JSON.parse(storedUserData);
+                    if (isValidUserData(parsedData)) {
+                        setLocalUserData(parsedData);
+                        setIsLoading(false);
+                    }
                 }
             } catch (error) {
-                console.error('Error in initialization:', error);
+                console.error('Error initializing user state:', error);
+            }
+            if (status !== 'loading') {
                 setIsLoading(false);
             }
         };
@@ -91,17 +98,17 @@ export default function Layout({ children }) {
 
     // Session monitoring in development
     useEffect(() => {
-        if (process.env.NODE_ENV === 'development' && status === 'authenticated') {
-            console.log('Session Data:', {
-                status,
-                user: {
-                    email: session?.user?.email,
-                    role: session?.user?.role,
-                    paymentStatus: session?.user?.paymentStatus
-                }
+        if (process.env.NODE_ENV === 'development') {
+            console.log('Navigation State:', {
+                isClient,
+                isAuthenticated,
+                localUserData,
+                sessionStatus: status,
+                sessionUser: session?.user,
+                shouldShowNavItems
             });
         }
-    }, [session, status]);
+    }, [isClient, isAuthenticated, localUserData, status, session, shouldShowNavItems]);
 
     // // Copy protection
     // useEffect(() => {
@@ -179,17 +186,12 @@ export default function Layout({ children }) {
         );
     }
 
-    const shouldShowNavItems = isClient && status !== 'loading';
-    const isAuthenticated = (status === 'authenticated' && session?.user) ||
-        (localUserData && isValidUserData(localUserData));
-    const userData = session?.user || (isValidUserData(localUserData) ? localUserData : null);
-
 
     const renderNavLinks = () => {
         if (!shouldShowNavItems) return null;
 
-
-
+        const currentUserData = session?.user || localUserData;
+        const showNavigation = isAuthenticated && currentUserData;
 
         return (
             <>
@@ -199,7 +201,7 @@ export default function Layout({ children }) {
                 >
                     Home
                 </Link>
-                {(isAuthenticated) && (
+                {showNavigation && (
                     <>
                         <Link
                             href="/subscription"
@@ -207,7 +209,7 @@ export default function Layout({ children }) {
                         >
                             Subscription
                         </Link>
-                        {userData?.role === 'admin' && (
+                        {currentUserData.role === 'admin' && (
                             <Link
                                 href="/admin"
                                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
@@ -215,7 +217,7 @@ export default function Layout({ children }) {
                                 Admin
                             </Link>
                         )}
-                        {userData?.paymentStatus === 'approved' && (
+                        {currentUserData.paymentStatus === 'approved' && (
                             <Link
                                 href="/ebook"
                                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
@@ -232,6 +234,9 @@ export default function Layout({ children }) {
     const renderMobileMenu = () => {
         if (!shouldShowNavItems) return null;
 
+        const currentUserData = session?.user || localUserData;
+        const showNavigation = isAuthenticated && currentUserData;
+
         return (
             <div className={`${isMenuOpen ? 'block' : 'hidden'} sm:hidden`}>
                 <div className="space-y-1 pb-3 pt-2">
@@ -241,7 +246,7 @@ export default function Layout({ children }) {
                     >
                         Home
                     </Link>
-                    {(isAuthenticated) && (
+                    {showNavigation && (
                         <>
                             <Link
                                 href="/subscription"
@@ -249,7 +254,7 @@ export default function Layout({ children }) {
                             >
                                 Subscription
                             </Link>
-                            {userData?.role === 'admin' && (
+                            {currentUserData.role === 'admin' && (
                                 <Link
                                     href="/admin"
                                     className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
@@ -257,7 +262,7 @@ export default function Layout({ children }) {
                                     Admin
                                 </Link>
                             )}
-                            {userData?.paymentStatus === 'approved' && (
+                            {currentUserData.paymentStatus === 'approved' && (
                                 <Link
                                     href="/ebook"
                                     className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
@@ -272,7 +277,7 @@ export default function Layout({ children }) {
                     {isAuthenticated ? (
                         <div className="space-y-1">
                             <p className="block px-4 py-2 text-base font-medium text-gray-500">
-                                {userData?.email}
+                                {currentUserData?.email}
                             </p>
                             <button
                                 onClick={handleSignOut}
