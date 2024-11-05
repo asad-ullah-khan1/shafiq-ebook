@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight, BookOpen, Brain, Target, CheckCircle2 } from 'lucide-react';
+import WhatsAppChat from './components/WhatsAppChat';
 
 export default function Home() {
   return (
@@ -273,6 +274,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <WhatsAppChat />
     </div>
   );
 }
