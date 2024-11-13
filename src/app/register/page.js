@@ -136,7 +136,7 @@ export default function Register() {
                                         <h3 className="text-lg font-semibold text-gray-900">Do it Yourself</h3>
                                         <div className="flex items-baseline">
                                             <span className="text-2xl font-bold text-gray-900">Rs.2700 PKR</span>
-                                            <span className="ml-1 text-gray-500">/month</span>
+
                                         </div>
                                         <p className="text-sm text-gray-500">Get the Book and do the assignments yourself.</p>
                                         <ul className="space-y-2 mt-4">
@@ -180,7 +180,7 @@ export default function Register() {
                                         <h3 className="text-lg font-semibold text-gray-900">Do it with Me</h3>
                                         <div className="flex items-baseline">
                                             <span className="text-2xl font-bold text-gray-900">Rs.4800 PKR</span>
-                                            <span className="ml-1 text-gray-500">/month</span>
+
                                         </div>
                                         <p className="text-sm text-gray-500">Get personalized guidance and support.</p>
                                         <ul className="space-y-2 mt-4">
