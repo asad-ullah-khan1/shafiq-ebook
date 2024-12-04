@@ -117,6 +117,9 @@ export default function Register() {
                         <label className="block text-sm font-medium leading-6 text-gray-900">
                             Select your plan
                         </label>
+                        <div className='bg-white p-4 rounded'>
+                            <h2 className='text-red-500'>Discount is valid till 10th of December.</h2>
+                        </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {/* Do it Yourself Tier */}
                             <div>
@@ -133,9 +136,14 @@ export default function Register() {
                                     className="block h-full p-6 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-indigo-600 peer-checked:bg-indigo-50 hover:bg-gray-50"
                                 >
                                     <div className="flex flex-col space-y-4">
+
                                         <h3 className="text-lg font-semibold text-gray-900">Do it Yourself</h3>
                                         <div className="flex items-baseline">
-                                            <span className="text-2xl font-bold text-gray-900">Rs.2700 PKR</span>
+                                            <div className="text-2xl font-bold text-gray-900">
+                                                <span className="line-through text-gray-500">Rs. 2700 PKR</span>
+                                                <span className="ml-2 text-green-600">Rs. 1450 PKR</span>
+                                            </div>
+
 
                                         </div>
                                         <p className="text-sm text-gray-500">Get the Book and do the assignments yourself.</p>
@@ -179,7 +187,11 @@ export default function Register() {
                                     <div className="flex flex-col space-y-4">
                                         <h3 className="text-lg font-semibold text-gray-900">Do it with Me</h3>
                                         <div className="flex items-baseline">
-                                            <span className="text-2xl font-bold text-gray-900">Rs.4800 PKR</span>
+                                            <div className="text-2xl font-bold text-gray-900">
+                                                <span className="line-through text-gray-500">Rs. 4800 PKR</span>
+                                                <span className="ml-2 text-green-600">Rs. 2590 PKR</span>
+                                            </div>
+
 
                                         </div>
                                         <p className="text-sm text-gray-500">Get personalized guidance and support.</p>

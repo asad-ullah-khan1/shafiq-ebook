@@ -10,7 +10,7 @@ const plans = [
     {
         tier: 'tier1',
         name: 'Do it Yourself',
-        price: 2700,
+        price: 1450,
         features: [
             'Get the eBook',
             'Do the assignments and writing yourself',
@@ -19,7 +19,7 @@ const plans = [
     {
         tier: 'tier2',
         name: 'Do it With Me',
-        price: 4800,
+        price: 2590,
         features: [
             'Get the eBook',
             'Have me review your assignments',
