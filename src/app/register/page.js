@@ -140,8 +140,8 @@ export default function Register() {
                                         <h3 className="text-lg font-semibold text-gray-900">Do it Yourself</h3>
                                         <div className="flex items-baseline">
                                             <div className="text-2xl font-bold text-gray-900">
-                                                <span className="line-through text-gray-500">Rs. 2700 PKR</span>
-                                                <span className="ml-2 text-green-600">Rs. 1450 PKR</span>
+
+                                                <span className="ml-2 text-green-600">Rs. 2700 PKR</span>
                                             </div>
 
 
@@ -188,8 +188,8 @@ export default function Register() {
                                         <h3 className="text-lg font-semibold text-gray-900">Do it with Me</h3>
                                         <div className="flex items-baseline">
                                             <div className="text-2xl font-bold text-gray-900">
-                                                <span className="line-through text-gray-500">Rs. 4800 PKR</span>
-                                                <span className="ml-2 text-green-600">Rs. 2590 PKR</span>
+
+                                                <span className="ml-2 text-green-600">Rs. 4800 PKR</span>
                                             </div>
 
 

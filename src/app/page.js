@@ -180,9 +180,9 @@ export default function Home() {
                     </li>
                   </ul>
                   <div className="text-3xl font-bold">
-                    <span className="line-through text-gray-500">2700 PKR</span>
-                    <span className="ml-2 text-green-600">1450 PKR</span> <br />
-                    <span className="ml-2 text-sm text-red-600">Discount is valid till 10th of December.</span>
+
+                    <span className="ml-2 text-green-600">2700 PKR</span> <br />
+
                   </div>
 
                 </div>
@@ -210,9 +210,9 @@ export default function Home() {
                     </li>
                   </ul>
                   <div className="text-3xl font-bold">
-                    <span className="line-through text-gray-500">4800 PKR</span>
-                    <span className="ml-2 text-green-600">2590 PKR</span> <br />
-                    <span className="ml-2 text-sm text-red-600">Discount is valid till 10th of December.</span>
+
+                    <span className="ml-2 text-green-600">4800 PKR</span> <br />
+
                   </div>
 
                 </div>
