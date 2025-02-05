@@ -117,9 +117,7 @@ export default function Register() {
                         <label className="block text-sm font-medium leading-6 text-gray-900">
                             Select your plan
                         </label>
-                        <div className='bg-white p-4 rounded'>
-                            <h2 className='text-red-500'>Discount is valid till 10th of December.</h2>
-                        </div>
+
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {/* Do it Yourself Tier */}
                             <div>
