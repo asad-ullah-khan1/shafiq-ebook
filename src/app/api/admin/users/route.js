@@ -11,7 +11,7 @@ export async function GET(req) {
         console.log('checking here:', session)
 
         // console.log('Session data:', session); // Log    
-        if (!session || session.user.email !== 'asadkhan602@gmail.com') {
+        if (!session || session.user.email !== 'sheekupediapro@gmail.com') {
             return NextResponse.json(
                 { message: 'Unauthorized' },
                 { status: 401 }
